@@ -1,0 +1,23 @@
+{
+  "year": 2026,
+  "updated_at": "2026-03-01",
+  "support_types": [
+    { "name": "일반형" },
+    { "name": "렌탈형" },
+    { "name": "SaaS형" }
+  ],
+  "caps": {
+    "general": 5000000,
+    "rental": 3500000,
+    "saas": 300000
+  },
+  "rates": {
+    "normal": 0.7,
+    "vulnerable": 0.8
+  },
+  "price_table": [
+    { "model": "65인치", "price": 3000000 },
+    { "model": "75인치", "price": 3300000 },
+    { "model": "86인치", "price": 4400000 }
+  ]
+}

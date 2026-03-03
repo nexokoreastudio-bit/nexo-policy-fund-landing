@@ -1,0 +1,17 @@
+{
+  "prices": {
+    "65": 3000000,
+    "75": 3300000,
+    "86": 4400000
+  },
+  "caps": {
+    "general": 5000000,
+    "rental": 3500000,
+    "saas": 300000
+  },
+  "rates": {
+    "normal": 0.7,
+    "vulnerable": 0.8
+  },
+  "officialApplyUrl": "https://www.sbiz.or.kr/smst/index.do"
+}
