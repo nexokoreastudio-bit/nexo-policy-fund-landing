@@ -1,42 +1,64 @@
 import type { LeadRecord } from '../types/policy'
 
-type LeadStorageAdapter = {
-  save: (payload: LeadRecord) => Promise<void>
+function toFormName(type: LeadRecord['inquiry_type']) {
+  return type === 'policy_waitlist' ? 'nexo_policy_waitlist' : 'nexo_policy_consult'
 }
 
-class ApiLeadAdapter implements LeadStorageAdapter {
-  async save(payload: LeadRecord) {
-    const response = await fetch('/api/lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
+function toFlatFields(payload: LeadRecord) {
+  const fields: Record<string, string> = {
+    created_at: payload.created_at,
+    inquiry_type: payload.inquiry_type,
+  }
 
-    if (!response.ok) {
-      throw new Error('failed to submit lead')
-    }
+  Object.entries(payload.formData).forEach(([key, value]) => {
+    fields[key] = String(value)
+  })
+
+  return fields
+}
+
+async function submitToNetlifyForm(payload: LeadRecord) {
+  const formName = toFormName(payload.inquiry_type)
+  const fields = toFlatFields(payload)
+  const body = new URLSearchParams({
+    'form-name': formName,
+    ...fields,
+  })
+
+  const response = await fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString(),
+  })
+
+  if (!response.ok) {
+    throw new Error('netlify form submit failed')
   }
 }
 
-class LocalLeadAdapter implements LeadStorageAdapter {
-  async save(payload: LeadRecord) {
-    const key = 'nexo_leads'
-    const prev = localStorage.getItem(key)
-    const list = prev ? (JSON.parse(prev) as LeadRecord[]) : []
-    list.push(payload)
-    localStorage.setItem(key, JSON.stringify(list))
-  }
+async function submitToSheetSync(payload: LeadRecord) {
+  await fetch('/.netlify/functions/sync-lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+}
+
+function saveLocalFallback(payload: LeadRecord) {
+  const key = 'nexo_leads'
+  const prev = localStorage.getItem(key)
+  const list = prev ? (JSON.parse(prev) as LeadRecord[]) : []
+  list.push(payload)
+  localStorage.setItem(key, JSON.stringify(list))
 }
 
 export async function submitLead(payload: LeadRecord) {
-  const primary = new ApiLeadAdapter()
-  const fallback = new LocalLeadAdapter()
-
   try {
-    await primary.save(payload)
-    return { ok: true, adapter: 'api' as const }
+    await submitToNetlifyForm(payload)
+    await submitToSheetSync(payload)
+    return { ok: true, adapter: 'netlify+sheet' as const }
   } catch {
-    await fallback.save(payload)
+    saveLocalFallback(payload)
     return { ok: true, adapter: 'local' as const }
   }
 }

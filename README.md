@@ -62,19 +62,50 @@ VITE_NEXO_POLICY_OPEN=true npm run dev
 
 ## Lead / Event logs
 
-- 브라우저 fallback 저장:
-  - leads: `localStorage.nexo_leads`
-  - events: `localStorage.nexo_event_logs`
+## Netlify Forms + Google Sheets 동시 연동
 
-- Next API 템플릿(향후 전환용):
-  - `app/api/lead/route.ts`
-  - `data/leads.json`
-  - `data/events.log`
+현재 폼 전송은 아래 순서로 동작합니다.
+
+1. Netlify Forms 저장  
+2. Netlify Function(`/.netlify/functions/sync-lead`) 호출  
+3. Google Sheets 행 추가  
+4. 실패 시 브라우저 fallback 저장(`localStorage.nexo_leads`)
+
+### Netlify Forms 확인 위치
+
+- Netlify Dashboard -> Site -> `Forms`
+- 폼명:
+  - `nexo_policy_waitlist` (공지 받기)
+  - `nexo_policy_consult` (상담 신청)
+
+### Google Sheets 연결 준비
+
+1. Google Cloud 서비스 계정 생성
+2. Google Sheets API 활성화
+3. 서비스 계정 이메일을 아래 2개 시트에 편집자로 공유
+   - 상담신청 시트: `1W_LyImnYkP4fsOZgfQsAFw8xTP1j2cZM7b3A-ohK0bA`
+   - 공고알림 시트: `1ux89Z0g4oMex_bD_28Gd8Vo5Bv4IZjh2BfCIpVJrXEI`
+4. Netlify 환경변수 설정
+
+```bash
+GOOGLE_SERVICE_ACCOUNT_EMAIL=...@....iam.gserviceaccount.com
+GOOGLE_PRIVATE_KEY=\"-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n\"
+CONSULT_SHEET_ID=1W_LyImnYkP4fsOZgfQsAFw8xTP1j2cZM7b3A-ohK0bA
+WAITLIST_SHEET_ID=1ux89Z0g4oMex_bD_28Gd8Vo5Bv4IZjh2BfCIpVJrXEI
+CONSULT_SHEET_RANGE=A:Z
+WAITLIST_SHEET_RANGE=A:Z
+```
+
+5. Netlify 재배포
+
+### 로컬 fallback 로그
+
+- leads: `localStorage.nexo_leads`
+- events: `localStorage.nexo_event_logs`
 
 ## Lead adapter
 
 파일: `src/lib/lead.ts`
 
-- `ApiLeadAdapter`: `/api/lead` POST
-- 실패 시 `LocalLeadAdapter` fallback
-- 이후 Google Sheets/CRM adapter로 교체 가능
+- Netlify Forms POST + Sheets sync 함수 호출
+- 실패 시 localStorage fallback
