@@ -22,7 +22,6 @@ async function submitToNetlifyForm(payload: LeadRecord) {
   const fields = toFlatFields(payload)
   const body = new URLSearchParams({
     'form-name': formName,
-    'bot-field': '',
     ...fields,
   })
 
