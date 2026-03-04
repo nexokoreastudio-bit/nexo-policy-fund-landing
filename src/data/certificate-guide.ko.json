@@ -1,0 +1,106 @@
+{
+  "general": {
+    "label": "일반 사업자",
+    "description": "기존 사업자 (2023년 이전 창업)",
+    "steps": [
+      {
+        "title": "STEP 1. 자료제출 사이트 접속",
+        "desc": "중소기업현황정보시스템에 접속하여 '온라인 자료제출'을 클릭합니다.",
+        "images": ["/assets/guide/general/step-04.png"],
+        "tip": "개인기업 제출자료: 2022~2024년 소득세, 부가세, 2024년 원천세 신고자료"
+      },
+      {
+        "title": "STEP 2. 공동인증서 / 간편인증 로그인",
+        "desc": "국세청에 등록한 대표자 개인 인증서(공동/금융/간편)로 로그인합니다.",
+        "images": [
+          "/assets/guide/general/step-07.png",
+          "/assets/guide/general/step-08.png",
+          "/assets/guide/general/step-09.png",
+          "/assets/guide/general/step-10.png"
+        ],
+        "tip": "최초 제출 시 홈택스에서 대표자 개인인증서(범용X)를 먼저 등록해야 합니다."
+      },
+      {
+        "title": "STEP 3. 사업자 정보 확인 및 자료 제출",
+        "desc": "사업자 정보를 확인하고, 필수 자료(재무제표/부가세/원천세)를 제출합니다.",
+        "images": [
+          "/assets/guide/general/step-11.png",
+          "/assets/guide/general/step-12.png",
+          "/assets/guide/general/step-13.png"
+        ],
+        "tip": "수정/기한 후 신고자료, PDF/엑셀/jpg/zip 파일은 제출 불가입니다."
+      },
+      {
+        "title": "STEP 4. 제출자료 조회",
+        "desc": "온라인으로 제출한 자료를 항목별로 조회하여 정상 제출 여부를 확인합니다.",
+        "images": ["/assets/guide/general/step-15.png"],
+        "tip": "재무제표(3개년), 부가세, 원천세(12개월) 모두 확인"
+      },
+      {
+        "title": "STEP 5. 신청서 작성",
+        "desc": "약관 동의 -> 기본정보(업종/매출/근로자) 입력 -> 신청서 제출",
+        "images": [
+          "/assets/guide/general/step-17.png",
+          "/assets/guide/general/step-18.png",
+          "/assets/guide/general/step-20.png",
+          "/assets/guide/general/step-21.png"
+        ],
+        "tip": "본점사업자등록일은 '개업연월일'이 아닌 사업자등록증명원의 '사업자등록일'입니다. 임원에 대표자 숫자를 넣지 마세요."
+      },
+      {
+        "title": "STEP 6. 진행상황 확인",
+        "desc": "신청서 제출 후 진행 결과를 확인합니다. 오류 발생 시 이곳에서 확인 가능합니다.",
+        "images": ["/assets/guide/general/step-30.png"],
+        "tip": "'소상공인 유예검토' 대상인 경우 과거 규모 확인 절차를 추가 진행해야 합니다."
+      },
+      {
+        "title": "STEP 7. 확인서 출력",
+        "desc": "발급된 확인서를 선택하고 '국문확인서 출력'을 클릭하여 인쇄합니다.",
+        "images": [
+          "/assets/guide/general/step-41.png",
+          "/assets/guide/general/step-42.png"
+        ],
+        "tip": "수정 가능 항목: 기업명, 대표자명, 주소, 확인서 용도"
+      }
+    ]
+  },
+  "startup": {
+    "label": "창업 기업",
+    "description": "2024~2025년 창업 기업 (자료 제출 불필요)",
+    "steps": [
+      {
+        "title": "STEP 1. 신청서 작성 시작",
+        "desc": "회원가입 후 약관 전체동의 -> 확인을 클릭합니다. 별도 자료 제출 없이 바로 신청서를 작성합니다.",
+        "images": [
+          "/assets/guide/startup/step-03.png",
+          "/assets/guide/startup/step-04.png"
+        ],
+        "tip": "창업기업은 온라인 자료제출 없이 신청서만 작성하면 됩니다."
+      },
+      {
+        "title": "STEP 2. 기본정보 및 매출/자산 입력",
+        "desc": "본점사업자등록일, 업종, 매출액, 자산총액, 상시근로자 수를 입력합니다.",
+        "images": [
+          "/assets/guide/startup/step-05.png",
+          "/assets/guide/startup/step-06.png"
+        ],
+        "tip": "매출이 없으면 '1'이라도 입력. 자산총액은 초기자본금 등 대략 산정. 천원 단위 입력 시 한글 표기를 반드시 확인."
+      },
+      {
+        "title": "STEP 3. 신청자 정보 입력 및 제출",
+        "desc": "신청자 정보를 입력하고 저장 -> 신청서 제출을 클릭합니다.",
+        "images": ["/assets/guide/startup/step-08.png"],
+        "tip": "성명에 2명 이상 입력하거나 이메일에 특수문자 입력 시 오류 발생"
+      },
+      {
+        "title": "STEP 4. 진행상황 확인 및 확인서 출력",
+        "desc": "진행상황을 확인하고, 발급 완료 시 확인서를 출력합니다.",
+        "images": [
+          "/assets/guide/startup/step-10.png",
+          "/assets/guide/startup/step-13.png"
+        ],
+        "tip": "소기업(소상공인)으로 표기되면 정상. '중소기업 아님'은 매출액을 원단위로 오입력한 경우가 많습니다."
+      }
+    ]
+  }
+}

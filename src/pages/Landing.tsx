@@ -43,7 +43,7 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
       {previewBanner ? (
         <div className="bg-amber-100 px-4 py-2 text-center text-xs font-bold text-amber-800 sm:text-sm">{previewBanner}</div>
       ) : null}
-      <StickyTopBar policyOpen={config.policy_open} onOpenWaitlist={openWaitlist} onOpenConsult={openConsult} />
+      <StickyTopBar policyOpen={config.policy_open} onOpenConsult={openConsult} />
       <main className="mx-auto w-full max-w-6xl px-4 pb-32 pt-6 sm:px-6 lg:px-8">
         <Hero policyOpen={config.policy_open} onOpenWaitlist={openWaitlist} onOpenConsult={openConsult} />
         <EligibilityCheck />
@@ -61,7 +61,7 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
         <Footer config={config} />
       </main>
 
-      <FloatingMobileCTA policyOpen={config.policy_open} onOpenWaitlist={openWaitlist} onOpenConsult={openConsult} />
+      <FloatingMobileCTA policyOpen={config.policy_open} onOpenConsult={openConsult} />
       <LeadModal
         open={modalOpen}
         mode={modalMode}
