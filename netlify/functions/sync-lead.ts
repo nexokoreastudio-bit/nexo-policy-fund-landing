@@ -11,8 +11,12 @@ function getEnv(name: string, fallback = '') {
   return process.env[name] ?? fallback
 }
 
+function toInquiryLabel(type: LeadPayload['inquiry_type']) {
+  return type === 'policy_waitlist' ? '공지 알림 신청' : '상담 신청'
+}
+
 function toRow(payload: LeadPayload) {
-  const base = [payload.created_at, payload.inquiry_type]
+  const base = [payload.created_at, toInquiryLabel(payload.inquiry_type)]
 
   if (payload.inquiry_type === 'policy_waitlist') {
     return [
