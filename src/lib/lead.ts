@@ -22,6 +22,7 @@ async function submitToNetlifyForm(payload: LeadRecord) {
   const fields = toFlatFields(payload)
   const body = new URLSearchParams({
     'form-name': formName,
+    'bot-field': '',
     ...fields,
   })
 
@@ -37,11 +38,16 @@ async function submitToNetlifyForm(payload: LeadRecord) {
 }
 
 async function submitToSheetSync(payload: LeadRecord) {
-  await fetch('/.netlify/functions/sync-lead', {
+  const response = await fetch('/.netlify/functions/sync-lead', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   })
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => '')
+    throw new Error(`sheet sync failed: ${response.status} ${text}`)
+  }
 }
 
 function saveLocalFallback(payload: LeadRecord) {
@@ -55,10 +61,15 @@ function saveLocalFallback(payload: LeadRecord) {
 export async function submitLead(payload: LeadRecord) {
   try {
     await submitToNetlifyForm(payload)
-    await submitToSheetSync(payload)
-    return { ok: true, adapter: 'netlify+sheet' as const }
   } catch {
     saveLocalFallback(payload)
-    return { ok: true, adapter: 'local' as const }
+    return { ok: true, adapter: 'local' as const, sheetSynced: false }
+  }
+
+  try {
+    await submitToSheetSync(payload)
+    return { ok: true, adapter: 'netlify+sheet' as const, sheetSynced: true }
+  } catch {
+    return { ok: true, adapter: 'netlify' as const, sheetSynced: false }
   }
 }

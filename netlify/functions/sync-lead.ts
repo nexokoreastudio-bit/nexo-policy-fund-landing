@@ -48,7 +48,7 @@ async function appendToSheet(payload: LeadPayload) {
     throw new Error('google service account env is missing')
   }
 
-  const privateKey = privateKeyRaw.replace(/\\n/g, '\n')
+  const privateKey = privateKeyRaw.replace(/^"|"$/g, '').replace(/\\n/g, '\n')
   const auth = new google.auth.JWT({
     email: clientEmail,
     key: privateKey,
@@ -64,6 +64,10 @@ async function appendToSheet(payload: LeadPayload) {
 
   const spreadsheetId = payload.inquiry_type === 'policy_waitlist' ? waitlistSheetId : consultSheetId
   const range = payload.inquiry_type === 'policy_waitlist' ? waitlistRange : consultRange
+
+  if (!spreadsheetId) {
+    throw new Error('spreadsheet id is missing')
+  }
 
   await sheets.spreadsheets.values.append({
     spreadsheetId,
@@ -93,6 +97,14 @@ export const handler: Handler = async (event) => {
       body: JSON.stringify({ ok: true }),
     }
   } catch (error) {
+    console.error('[sync-lead] failed', {
+      message: error instanceof Error ? error.message : 'unknown',
+      hasClientEmail: Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL),
+      hasPrivateKey: Boolean(process.env.GOOGLE_PRIVATE_KEY),
+      hasConsultSheetId: Boolean(process.env.CONSULT_SHEET_ID),
+      hasWaitlistSheetId: Boolean(process.env.WAITLIST_SHEET_ID),
+    })
+
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
