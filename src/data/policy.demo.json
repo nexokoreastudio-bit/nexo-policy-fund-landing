@@ -1,18 +1,14 @@
 {
   "year": 2026,
-  "updated_at": "2026-03-01",
+  "updated_at": "2026-03-05",
   "support_types": [
-    { "name": "일반형" },
-    { "name": "렌탈형" },
-    { "name": "SaaS형" }
+    { "name": "일반형" }
   ],
   "caps": {
-    "general": 5000000,
-    "rental": 3500000,
-    "saas": 300000
+    "general": 5000000
   },
   "rates": {
-    "normal": 0.7,
+    "normal": 0.5,
     "vulnerable": 0.8
   },
   "price_table": [

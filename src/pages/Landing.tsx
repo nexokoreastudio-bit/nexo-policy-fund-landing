@@ -51,6 +51,7 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
           policyOpen={config.policy_open}
           policyYear={config.policy_year}
           onOpenWaitlist={openWaitlist}
+          onOpenConsult={openConsult}
           policyDataOverride={overridePolicyData}
         />
         <TimelineSection />

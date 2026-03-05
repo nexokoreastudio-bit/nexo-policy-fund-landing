@@ -23,6 +23,7 @@ function LeadModal({ open, mode, onClose, onSuccess }: LeadModalProps) {
   const [interestInch, setInterestInch] = useState('')
   const [businessName, setBusinessName] = useState('')
   const [installEnv, setInstallEnv] = useState('')
+  const [supportType, setSupportType] = useState<'normal' | 'vulnerable'>('normal')
   const [message, setMessage] = useState('')
   const [agree, setAgree] = useState(false)
 
@@ -58,6 +59,7 @@ function LeadModal({ open, mode, onClose, onSuccess }: LeadModalProps) {
             businessName,
             region,
             installEnv,
+            supportType,
             message,
             agree,
           },
@@ -103,6 +105,10 @@ function LeadModal({ open, mode, onClose, onSuccess }: LeadModalProps) {
               <input required value={businessName} onChange={(e) => setBusinessName(e.target.value)} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" placeholder="사업장명" />
               <input required value={region} onChange={(e) => setRegion(e.target.value)} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" placeholder="지역" />
               <input required value={installEnv} onChange={(e) => setInstallEnv(e.target.value)} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" placeholder="설치환경" />
+              <select value={supportType} onChange={(e) => setSupportType(e.target.value as 'normal' | 'vulnerable')} className="rounded-lg border border-slate-300 px-3 py-2 text-sm">
+                <option value="normal">일반</option>
+                <option value="vulnerable">취약계층</option>
+              </select>
               <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="min-h-24 rounded-lg border border-slate-300 px-3 py-2 text-sm sm:col-span-2" placeholder="문의내용" />
             </>
           )}

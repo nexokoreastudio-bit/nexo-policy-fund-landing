@@ -9,12 +9,13 @@ type SubsidySectionProps = {
   policyOpen: boolean
   policyYear: number
   onOpenWaitlist: () => void
+  onOpenConsult: () => void
   policyDataOverride?: PolicyData
 }
 
 const policyData = policy as PolicyData
 
-function SubsidySection({ policyOpen, policyYear, onOpenWaitlist, policyDataOverride }: SubsidySectionProps) {
+function SubsidySection({ policyOpen, policyYear, onOpenWaitlist, onOpenConsult, policyDataOverride }: SubsidySectionProps) {
   const activePolicy = policyDataOverride ?? policyData
   const availableModels = activePolicy.price_table.map((item) => item.model)
 
@@ -75,17 +76,7 @@ function SubsidySection({ policyOpen, policyYear, onOpenWaitlist, policyDataOver
       {canCalculate ? (
         <div className="mt-5 grid gap-4 rounded-2xl border border-slate-200 p-4">
           <div className="grid gap-3 sm:grid-cols-2">
-            <select
-              value={input.techType}
-              onChange={(event) =>
-                setInput((prev) => ({ ...prev, techType: event.target.value as SubsidyInput['techType'] }))
-              }
-              className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
-            >
-              <option value="general">일반형</option>
-              <option value="rental">렌탈형</option>
-              <option value="saas">SaaS형</option>
-            </select>
+            <div className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700">일반형</div>
 
             <select
               value={input.model}
@@ -115,10 +106,13 @@ function SubsidySection({ policyOpen, policyYear, onOpenWaitlist, policyDataOver
               }
               className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
             >
-              <option value="normal">일반</option>
-              <option value="vulnerable">취약</option>
+              <option value="normal">일반 (정부지원 50%)</option>
+              <option value="vulnerable">취약 (장애인, 장애인기업, 간이과세자, 1인점포 / 정부지원 80%)</option>
             </select>
           </div>
+          <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-bold text-amber-800">
+            일반/취약 모두 현재 계산은 안내용이며, 실제 공고 시 정확한 할인율이 적용됩니다.
+          </p>
 
           <button
             type="button"
@@ -139,27 +133,56 @@ function SubsidySection({ policyOpen, policyYear, onOpenWaitlist, policyDataOver
 
       {calculated && result ? (
         <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-          <ul className="grid gap-2 text-sm text-slate-700">
-            <li>
-              공급가액(부가세 제외): <b>{formatCurrency(result.supplyAmount)}</b>
+          <ul className="grid gap-3 text-slate-700">
+            <li className="rounded-xl bg-white px-4 py-3">
+              <p className="text-sm font-semibold text-slate-600">공급가액(부가세 제외)</p>
+              <p className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(result.supplyAmount)}</p>
+              <p className="mt-1 text-xs text-slate-500">제품 가격 합계입니다</p>
             </li>
-            <li>
-              국비지원금(상한 적용): <b>{formatCurrency(result.supportAmount)}</b>
+            <li className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+              <p className="text-sm font-semibold text-emerald-800">국비지원금(상한 적용)</p>
+              <p className="mt-1 text-2xl font-black text-emerald-700">{formatCurrency(result.supportAmount)}</p>
+              <p className="mt-1 text-xs text-emerald-700">정부에서 지원되는 금액입니다</p>
             </li>
-            <li>
-              자부담금: <b>{formatCurrency(result.ownerBurden)}</b>
+            <li className="rounded-xl bg-white px-4 py-3">
+              <p className="text-sm font-semibold text-slate-600">자부담금</p>
+              <p className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(result.ownerBurden)}</p>
+              <p className="mt-1 text-xs text-slate-500">실제 결제금액입니다</p>
             </li>
-            <li>
-              부가세(10%): <b>{formatCurrency(result.vat)}</b>
+            <li className="rounded-xl bg-white px-4 py-3">
+              <p className="text-sm font-semibold text-slate-600">부가세(10%)</p>
+              <p className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(result.vat)}</p>
+              <p className="mt-1 text-xs text-slate-500">소상공인 전액 부담입니다</p>
             </li>
-            <li>
-              소상공인 총 부담금: <b>{formatCurrency(result.totalBurden)}</b>
+            <li className="rounded-xl border-2 border-sky-300 bg-sky-50 px-4 py-3">
+              <p className="text-sm font-semibold text-sky-800">소상공인 총 부담금</p>
+              <p className="mt-1 text-3xl font-black text-sky-900">{formatCurrency(result.totalBurden)}</p>
+              <p className="mt-1 text-xs text-sky-700">자부담금 + 부가세 최종 합계</p>
             </li>
           </ul>
           <p className="mt-3 text-sm font-semibold text-rose-700">VAT는 소상공인 전액 부담입니다.</p>
           {result.capExceeded ? (
             <p className="mt-1 text-sm font-semibold text-amber-700">국비 상한 초과 시 초과분은 소상공인 부담입니다.</p>
           ) : null}
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+            <a
+              href="/certificate-guide"
+              className="rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-bold text-white"
+              onClick={() => track('calc_cta_certificate')}
+            >
+              소상공인확인서 발급 페이지
+            </a>
+            <button
+              type="button"
+              onClick={() => {
+                track('calc_cta_consult')
+                onOpenConsult()
+              }}
+              className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800"
+            >
+              상담 신청
+            </button>
+          </div>
         </div>
       ) : null}
     </section>

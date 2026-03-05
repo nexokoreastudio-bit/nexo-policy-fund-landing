@@ -8,12 +8,12 @@ function Hero({ policyOpen, onOpenWaitlist, onOpenConsult }: HeroProps) {
   return (
     <section id="hero" className="rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-sky-900 px-6 py-14 text-white shadow-xl sm:px-10">
       <h1 className="text-3xl font-black leading-tight sm:text-5xl">
-        2026 전자칠판 정책자금,
+        (주)넥소 전자칠판 스마트상점 이용 시,
         <br />
-        공고와 동시에 신청 기회를 가장 먼저 잡으세요
+        전자칠판 도입 비용 50% 이상 할인 혜택
       </h1>
       <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base">
-        신청 조건/절차/준비서류를 미리 준비해 두면 공고 즉시 신청 가능합니다.
+        공고 오픈 전에 신청 조건/절차/준비서류를 미리 준비하면 혜택을 더 빠르게 확보할 수 있습니다.
       </p>
       <div className="mt-7 flex flex-col gap-3 sm:flex-row">
         {policyOpen ? (
@@ -33,6 +33,9 @@ function Hero({ policyOpen, onOpenWaitlist, onOpenConsult }: HeroProps) {
         </button>
       </div>
       <div className="mt-6 flex flex-wrap gap-2">
+        <span className="rounded-full bg-sky-400/20 px-3 py-1 text-xs font-semibold text-sky-100">
+          교육 서비스업 기준: 평균매출액 10억원 이하 · 상시근로자 5명 미만
+        </span>
         <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">대리신청 불가</span>
         <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">VAT 별도(공고 기준)</span>
         <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">의무사용(공고 기준)</span>

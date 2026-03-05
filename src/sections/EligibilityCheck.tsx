@@ -48,6 +48,9 @@ function EligibilityCheck() {
     <section id="eligibility" className="mt-8 rounded-3xl border-2 border-sky-300 bg-gradient-to-b from-sky-50 to-white p-6 shadow-lg sm:p-8">
       <h2 className="text-2xl font-extrabold text-slate-900">1분 자격진단</h2>
       <p className="mt-2 text-sm text-slate-600">부적합 신청을 줄이고, 필요한 준비를 빠르게 확인할 수 있습니다.</p>
+      <p className="mt-2 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2 text-xs font-semibold text-sky-800">
+        교육 서비스업 소상공인 기준: 평균매출액 10억원 이하, 상시근로자 5명 미만
+      </p>
 
       <div className="mt-5 rounded-2xl border-2 border-sky-200 bg-white p-5">
         <p className="text-sm font-bold text-sky-700">Step {step} / 5</p>

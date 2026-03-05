@@ -1,8 +1,17 @@
 {
   "year": 2026,
-  "updated_at": null,
-  "support_types": [],
-  "caps": {},
-  "rates": {},
-  "price_table": []
+  "updated_at": "2026-03-05",
+  "support_types": [{ "name": "일반형" }],
+  "caps": {
+    "general": 5000000
+  },
+  "rates": {
+    "normal": 0.5,
+    "vulnerable": 0.8
+  },
+  "price_table": [
+    { "model": "65인치", "price": 3000000 },
+    { "model": "75인치", "price": 3300000 },
+    { "model": "86인치", "price": 4400000 }
+  ]
 }
