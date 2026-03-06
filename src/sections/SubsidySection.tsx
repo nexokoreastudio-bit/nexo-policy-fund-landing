@@ -84,7 +84,9 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
     if (!canCalculate) return null
     return calculateSubsidy(input, activePolicy)
   }, [activePolicy, canCalculate, input])
-  const travelFee = regionType === 'metro' ? 0 : 100000
+  const nonMetroTravelFee = regionType === 'metro' ? 0 : 100000
+  const islandTravelFee = regionType === 'island' ? 100000 : 0
+  const travelFee = nonMetroTravelFee + islandTravelFee
   const installLaborFee = 0
   const finalAmountWithExtra = (result?.totalBurden ?? 0) + travelFee + installLaborFee
 
@@ -205,6 +207,7 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
               <p className="text-sm font-semibold text-slate-600">부가세(+)</p>
               <p className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(result.vat)}</p>
               <p className="mt-1 text-xs text-slate-500">부가세는 추후 환급 가능한 금액입니다.</p>
+              <p className="mt-1 text-xs font-bold text-red-600">지원금 적용 후 자부담금의 부가세가 아닌, 지원금 적용 전 제품 원공급가액 기준 부가세입니다.</p>
             </li>
             <li className="rounded-xl border-2 border-slate-300 bg-slate-100 px-4 py-3">
               <p className="text-sm font-semibold text-slate-700">최종 입금액</p>
@@ -217,8 +220,8 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
             <ul className="mt-2 grid gap-1 text-sm text-slate-600">
               <li>• 선택 지역: {selectedRegion.label}</li>
               <li>• 자동 분류: {regionType === 'metro' ? '수도권' : regionType === 'island' ? '도서산간지역' : '수도권외 지역'}</li>
-              <li>• 수도권외 출장비: {regionType === 'non_metro' ? '100,000원' : '0원'}</li>
-              <li>• 도서산간지역 출장비: {regionType === 'island' ? '100,000원' : '0원'}</li>
+              <li>• 수도권외 출장비: {nonMetroTravelFee === 100000 ? '100,000원' : '0원'}</li>
+              <li>• 도서산간지역 출장비: {islandTravelFee === 100000 ? '100,000원' : '0원'}</li>
               <li>• 설치비 및 인건비: {formatCurrency(installLaborFee)}</li>
             </ul>
           </div>
