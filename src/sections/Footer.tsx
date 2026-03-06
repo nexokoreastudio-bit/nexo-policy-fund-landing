@@ -10,10 +10,10 @@ function Footer({ config }: FooterProps) {
       <p className="font-semibold text-slate-800">NEXO | 대표번호 000-0000-0000</p>
       <p className="mt-2">본 페이지는 신청을 대행하지 않으며 안내 목적입니다.</p>
       <div className="mt-2 flex flex-col gap-1 sm:flex-row sm:gap-4">
-        <a href={config.official_url} target="_blank" rel="noreferrer" className="text-sky-700 underline underline-offset-4">
+        <a href={config.official_url} target="_blank" rel="noreferrer" className="text-slate-700 underline underline-offset-4">
           공식 사이트
         </a>
-        <a href={config.announce_url} target="_blank" rel="noreferrer" className="text-sky-700 underline underline-offset-4">
+        <a href={config.announce_url} target="_blank" rel="noreferrer" className="text-slate-700 underline underline-offset-4">
           공고/신청 페이지
         </a>
       </div>

@@ -10,15 +10,21 @@ const items = [
 
 function RiskSection() {
   return (
-    <section id="risks" className="mt-8 rounded-3xl border border-rose-200 bg-rose-50 p-6 shadow-sm sm:p-8">
-      <div className="rounded-2xl border border-rose-300 bg-white px-4 py-3">
-        <p className="text-sm font-bold text-rose-700">필독</p>
-        <p className="mt-1 text-sm text-slate-700">아래 항목은 실제 신청 탈락/환수와 직결될 수 있어 반드시 확인해 주세요.</p>
-      </div>
-      <h2 className="mt-4 text-2xl font-extrabold text-slate-900">리스크/주의사항</h2>
-      <div className="mt-4">
-        <Accordion items={items} />
-      </div>
+    <section id="risks" className="mt-6">
+      <details className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <summary className="cursor-pointer list-none text-lg font-bold text-slate-900">
+          리스크/주의사항
+          <span className="ml-2 text-xs font-medium text-slate-500 group-open:hidden">열기</span>
+          <span className="ml-2 hidden text-xs font-medium text-slate-500 group-open:inline">닫기</span>
+        </summary>
+        <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+          <p className="text-sm font-bold text-slate-700">필독</p>
+          <p className="mt-1 text-sm text-slate-700">아래 항목은 실제 신청 탈락/환수와 직결될 수 있어 반드시 확인해 주세요.</p>
+        </div>
+        <div className="mt-4">
+          <Accordion items={items} />
+        </div>
+      </details>
     </section>
   )
 }

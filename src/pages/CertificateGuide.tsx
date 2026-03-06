@@ -42,8 +42,11 @@ function CertificateGuide() {
       <StickyTopBar policyOpen={config.policy_open} onOpenConsult={() => setModalOpen(true)} />
       <main className="mx-auto w-full max-w-6xl px-4 pb-32 pt-6 sm:px-6 lg:px-8">
         <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <h1 className="text-3xl font-black text-slate-900 sm:text-4xl">소상공인 확인서 발급 방법 (3분이면 끝납니다)</h1>
-          <p className="mt-3 text-sm text-slate-600">아래 순서대로 진행하면 신청 준비 시간을 크게 줄일 수 있습니다.</p>
+          <h1 className="text-3xl font-black text-slate-900 sm:text-4xl">소상공인 확인서 발급 방법</h1>
+          <p className="mt-3 text-sm text-slate-600">유효기간: 2026.04.01 ~ 2027.03.31</p>
+          <p className="mt-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700">
+            4월 1일 이후 신청자는 반드시 2026년도 확인서로 갱신 발급받아야 합니다.
+          </p>
         </section>
 
         <section className="mt-6 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
@@ -83,7 +86,7 @@ function CertificateGuide() {
               </div>
 
               {step.tip ? (
-                <div className="mx-5 mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800 sm:mx-6">
+                <div className="mx-5 mt-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 sm:mx-6">
                   {step.tip}
                 </div>
               ) : null}
@@ -133,17 +136,6 @@ function CertificateGuide() {
               ) : null}
             </article>
           ))}
-        </section>
-
-        <section className="mt-8 rounded-3xl bg-slate-900 px-6 py-10 text-white sm:px-10">
-          <h2 className="text-2xl font-black">확인서 발급이 어려우신가요? 넥소에서 무료로 도와드립니다</h2>
-          <button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="mt-5 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-900"
-          >
-            상담 신청
-          </button>
         </section>
 
         <Footer config={config} />

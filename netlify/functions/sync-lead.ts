@@ -32,8 +32,6 @@ function toRow(payload: LeadPayload) {
     ]
   }
 
-  const supportTypeLabel = payload.formData.supportType === 'vulnerable' ? '취약계층' : '일반'
-
   return [
     ...base,
     String(payload.formData.name ?? ''),
@@ -41,7 +39,7 @@ function toRow(payload: LeadPayload) {
     String(payload.formData.businessName ?? ''),
     String(payload.formData.region ?? ''),
     String(payload.formData.installEnv ?? ''),
-    supportTypeLabel,
+    String(payload.formData.support_type ?? ''),
     String(payload.formData.message ?? ''),
     String(payload.formData.agree ?? ''),
   ]

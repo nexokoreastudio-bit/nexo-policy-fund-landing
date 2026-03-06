@@ -9,7 +9,7 @@
   },
   "rates": {
     "normal": 0.5,
-    "vulnerable": 0.8
+    "vulnerable": 0.6
   },
   "price_table": [
     { "model": "65인치", "price": 3000000 },
