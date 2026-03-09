@@ -100,6 +100,9 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
       ) : (
         <p className="mt-2 text-sm text-slate-600">현재 {policyYear}년 공고 전 단계이며, 아래 계산은 사전 시뮬레이션 용도입니다.</p>
       )}
+      {policyOpen ? (
+        <p className="mt-1 text-xs font-semibold text-slate-700">신청기간: 2026년 3월 13일(금) 10:00 ~ 4월 1일(수) 17:00 (공고문 기준)</p>
+      ) : null}
       <p className="mt-1 text-xs font-semibold text-slate-500">공고 기준 값이며 변동 가능</p>
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
         {productLinks.map((link) => (

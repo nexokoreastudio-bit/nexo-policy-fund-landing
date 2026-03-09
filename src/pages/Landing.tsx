@@ -6,6 +6,7 @@ import Toast from '../components/Toast'
 import Hero from '../sections/Hero'
 import MainBoardSection from '../sections/MainBoardSection'
 import EligibilityCheck from '../sections/EligibilityCheck'
+import SmallBusinessCriteriaSection from '../sections/SmallBusinessCriteriaSection'
 import SubsidySection from '../sections/SubsidySection'
 import DocumentsGuideSection from '../sections/DocumentsGuideSection'
 import TimelineSection from '../sections/TimelineSection'
@@ -54,6 +55,7 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
         </div>
         <MainBoardSection policyOpen={config.policy_open} onOpenWaitlist={openWaitlist} />
         <EligibilityCheck onOpenConsult={openConsult} />
+        <SmallBusinessCriteriaSection />
         <SubsidySection
           policyOpen={config.policy_open}
           policyYear={config.policy_year}
