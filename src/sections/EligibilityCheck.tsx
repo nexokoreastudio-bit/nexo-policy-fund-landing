@@ -13,9 +13,9 @@ function EligibilityCheck({ onOpenConsult }: EligibilityCheckProps) {
           <h3 className="text-lg font-black text-slate-900">자격 가능성 높음</h3>
           <ul className="mt-3 grid gap-2 text-sm text-slate-700">
             <li>• 정상 영업 중이며 국세/지방세 체납이 없음</li>
-            <li>• 2020~2024 스마트상점 수혜 이력이 없음</li>
+            <li>• 2020~2025 스마트상점 수혜 이력이 없음 (수혜 이력 보유 시 신청 제한 가능)</li>
             <li>• 교육 서비스업: 평균매출액 10억원 이하</li>
-            <li>• 교육 서비스업: 상시근로자 5명 미만</li>
+            <li>• 교육 서비스업: 상시근로자 5명 미만 (4대보험 가입자 기준)</li>
           </ul>
         </article>
 
