@@ -23,7 +23,11 @@ function LeadSection({ policyOpen, onOpenWaitlist, onOpenConsult }: LeadSectionP
           상담 신청
         </button>
       </div>
-      <p className="mt-5 text-sm text-slate-300">연락처: 000-0000-0000 (placeholder)</p>
+      <div className="mt-5 text-sm text-slate-300">
+        <p>전화: 032-569-5771~2 / 010-9981-5174</p>
+        <p className="mt-1">이메일: nexokorea@gmail.com</p>
+        <p className="mt-1">주소: 인천광역시 서구 보듬로158 검단지식산업센터 블루텍제조동 527호, 530호</p>
+      </div>
     </section>
   )
 }
