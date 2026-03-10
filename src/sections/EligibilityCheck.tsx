@@ -24,9 +24,9 @@ function EligibilityCheck({ onOpenConsult }: EligibilityCheckProps) {
           <ul className="mt-3 grid gap-2 text-sm text-slate-700">
             <li>• 과거 수혜 이력이 있는 경우 (일부 예외 모델 별도 확인)</li>
             <li>• 체납/휴폐업 이슈가 있는 경우</li>
-            <li>• 특별 지원 대상(60%) 여부 확인 필요</li>
+            <li>• 우대지원(60%) 대상 여부 확인 필요</li>
             <li>• 지원제외업종 해당 여부 및 사업장 유지 조건 확인 필요</li>
-            <li className="font-semibold">- 1인 사업자 / 간이과세자 / 장애인 기업</li>
+            <li className="font-semibold">- 1인 자영업자 / 간이과세자 / 장애인 사업주</li>
           </ul>
         </article>
       </div>

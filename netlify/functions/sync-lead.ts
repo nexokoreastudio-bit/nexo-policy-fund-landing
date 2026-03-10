@@ -17,6 +17,12 @@ function toInquiryLabel(type: LeadPayload['inquiry_type']) {
 
 function toRow(payload: LeadPayload) {
   const base = [payload.created_at, toInquiryLabel(payload.inquiry_type)]
+  const utm = [
+    String(payload.formData.utm_source ?? ''),
+    String(payload.formData.utm_medium ?? ''),
+    String(payload.formData.utm_campaign ?? ''),
+    String(payload.formData.utm_content ?? ''),
+  ]
 
   if (payload.inquiry_type === 'policy_waitlist') {
     return [
@@ -25,10 +31,10 @@ function toRow(payload: LeadPayload) {
       String(payload.formData.phone ?? ''),
       String(payload.formData.email ?? ''),
       String(payload.formData.region ?? ''),
-      String(payload.formData.industry ?? ''),
       String(payload.formData.interestInch ?? ''),
       String(payload.formData.tag ?? ''),
       String(payload.formData.agree ?? ''),
+      ...utm,
     ]
   }
 
@@ -38,10 +44,10 @@ function toRow(payload: LeadPayload) {
     String(payload.formData.phone ?? ''),
     String(payload.formData.businessName ?? ''),
     String(payload.formData.region ?? ''),
-    String(payload.formData.installEnv ?? ''),
     String(payload.formData.support_type ?? ''),
     String(payload.formData.message ?? ''),
     String(payload.formData.agree ?? ''),
+    ...utm,
   ]
 }
 

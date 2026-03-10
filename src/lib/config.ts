@@ -6,6 +6,9 @@ const defaults: AppConfig = {
   policy_open: false,
   official_url: 'https://www.sbiz.or.kr/smst/index.do',
   announce_url: 'https://ols.semas.or.kr/ols/man/SMAN010M/page.do',
+  support_rate_normal: 0.5,
+  support_rate_special: 0.6,
+  support_max_amount: 5000000,
 }
 
 function parseOverrideValue() {

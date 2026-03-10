@@ -1,22 +1,20 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import StickyTopBar from '../components/StickyTopBar'
 import FloatingMobileCTA from '../components/FloatingMobileCTA'
 import LeadModal from '../components/LeadModal'
 import Toast from '../components/Toast'
+import StepProgressBar from '../components/StepProgressBar'
 import Hero from '../sections/Hero'
-import MainBoardSection from '../sections/MainBoardSection'
-import EligibilityCheck from '../sections/EligibilityCheck'
-import SmallBusinessCriteriaSection from '../sections/SmallBusinessCriteriaSection'
-import SubsidySection from '../sections/SubsidySection'
+import SupportComparisonSection from '../sections/SupportComparisonSection'
+import ConversionChecklistSection from '../sections/ConversionChecklistSection'
 import DocumentsGuideSection from '../sections/DocumentsGuideSection'
-import TimelineSection from '../sections/TimelineSection'
-import RiskSection from '../sections/RiskSection'
-import TrustSection from '../sections/TrustSection'
-import FAQSection from '../sections/FAQSection'
+import ApplicationJourneySection, { RelatedSitesPanel } from '../sections/ApplicationJourneySection'
 import LeadSection from '../sections/LeadSection'
 import Footer from '../sections/Footer'
 import { getClientConfig } from '../lib/config'
+import { mergeAndStoreUtm } from '../lib/utm'
 import type { AppConfig, PolicyData } from '../types/policy'
+import policyDataRaw from '../data/policy.json'
 
 type LandingProps = {
   overrideConfig?: Partial<AppConfig>
@@ -26,10 +24,15 @@ type LandingProps = {
 
 function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingProps) {
   const config = useMemo(() => ({ ...getClientConfig(), ...(overrideConfig ?? {}) }), [overrideConfig])
+  const policyData = (overridePolicyData ?? (policyDataRaw as PolicyData))
 
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<'policy_waitlist' | 'consult'>('consult')
   const [toastMessage, setToastMessage] = useState('')
+
+  useEffect(() => {
+    mergeAndStoreUtm(window.location.search)
+  }, [])
 
   const openWaitlist = () => {
     setModalMode('policy_waitlist')
@@ -42,30 +45,19 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
   }
 
   return (
-    <div className="bg-slate-50 text-slate-900">
+    <div className="bg-[radial-gradient(circle_at_top,#132a62_0%,#081127_18%,#060b19_42%,#04070f_100%)] text-slate-900">
       {previewBanner ? (
         <div className="bg-slate-100 px-4 py-2 text-center text-xs font-bold text-slate-700 sm:text-sm">{previewBanner}</div>
       ) : null}
       <StickyTopBar policyOpen={config.policy_open} onOpenConsult={openConsult} />
       <main className="mx-auto w-full max-w-6xl px-4 pb-32 pt-6 sm:px-6 lg:px-8">
-        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <Hero policyOpen={config.policy_open} onOpenWaitlist={openWaitlist} onOpenConsult={openConsult} />
-          </div>
-        </div>
-        <MainBoardSection policyOpen={config.policy_open} onOpenWaitlist={openWaitlist} />
-        <EligibilityCheck onOpenConsult={openConsult} />
-        <SmallBusinessCriteriaSection />
-        <SubsidySection
-          policyOpen={config.policy_open}
-          policyYear={config.policy_year}
-          policyDataOverride={overridePolicyData}
-        />
+        <Hero config={config} onOpenConsult={openConsult} />
+        <StepProgressBar />
+        <RelatedSitesPanel />
+        <SupportComparisonSection config={config} policyData={policyData} />
+        <ConversionChecklistSection onOpenConsult={openConsult} />
         <DocumentsGuideSection />
-        <TimelineSection />
-        <RiskSection />
-        <TrustSection />
-        <FAQSection policyOpen={config.policy_open} />
+        <ApplicationJourneySection />
         <LeadSection policyOpen={config.policy_open} onOpenWaitlist={openWaitlist} onOpenConsult={openConsult} />
         <Footer config={config} />
       </main>

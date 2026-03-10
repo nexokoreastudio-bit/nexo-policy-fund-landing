@@ -8,6 +8,11 @@ import type { PolicyData } from '../types/policy'
 type SubsidySectionProps = {
   policyOpen: boolean
   policyYear: number
+  config: {
+    support_rate_normal: number
+    support_rate_special: number
+    support_max_amount: number
+  }
   policyDataOverride?: PolicyData
 }
 
@@ -49,7 +54,7 @@ const productLinks = [
   },
 ]
 
-function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidySectionProps) {
+function SubsidySection({ policyOpen, policyYear, config, policyDataOverride }: SubsidySectionProps) {
   const activePolicy = policyDataOverride ?? policyData
   const availableModels = activePolicy.price_table.map((item) => item.model)
 
@@ -91,8 +96,23 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
   const finalAmountWithExtra = (result?.totalBurden ?? 0) + travelFee + installLaborFee
 
   return (
-    <section id="calculator" className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-      <h2 className="text-2xl font-extrabold text-slate-900">지원금 계산기</h2>
+    <section
+      id="calculator"
+      className="mt-8 rounded-3xl border border-[#e6dcc8] bg-white p-6 shadow-[0_18px_44px_rgba(15,23,42,0.06)] sm:p-8"
+    >
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 className="text-2xl font-extrabold text-slate-900">지원금 확인하기</h2>
+          <p className="mt-2 text-sm text-slate-600">전자칠판 구입형 기준으로 정부지원금, 자부담금, 부가세 부담 흐름을 바로 확인할 수 있습니다.</p>
+        </div>
+        <div className="rounded-2xl bg-slate-950 px-4 py-3 text-white">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#e6c57a]">지원 기준</p>
+          <p className="mt-1 text-sm font-semibold">
+            일반 {Math.round(config.support_rate_normal * 100)}% / 우대 {Math.round(config.support_rate_special * 100)}% / 최대{' '}
+            {formatCurrency(config.support_max_amount)}
+          </p>
+        </div>
+      </div>
       {policyOpen ? (
         <p className="mt-2 text-sm text-slate-600">
           공고 기준 {activePolicy.updated_at ? `(업데이트: ${formatDate(activePolicy.updated_at)})` : '(업데이트 대기)'}
@@ -104,6 +124,16 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
         <p className="mt-1 text-xs font-semibold text-slate-700">신청기간: 2026년 3월 13일(금) 10:00 ~ 4월 1일(수) 17:00 (공고문 기준)</p>
       ) : null}
       <p className="mt-1 text-xs font-semibold text-slate-500">공고 기준 값이며 변동 가능</p>
+      <div className="mt-4 grid gap-3 lg:grid-cols-2">
+        <div className="rounded-2xl border border-[#ece5d8] bg-[#fcfbf8] px-4 py-3">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a6d22]">신청 기준</p>
+          <p className="mt-2 text-sm font-semibold text-slate-700">대표자 본인 명의로 신청하며, 등록 제품가는 부가가치세 제외 금액 기준입니다.</p>
+        </div>
+        <div className="rounded-2xl border border-[#e6d19c] bg-[#fff7df] px-4 py-3">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a6d22]">꼭 확인할 점</p>
+          <p className="mt-2 text-sm font-semibold text-slate-700">국비는 기술공급기업으로 지급되고, 자부담금과 부가세는 소상공인이 직접 부담합니다.</p>
+        </div>
+      </div>
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
         {productLinks.map((link) => (
           <a
@@ -111,20 +141,34 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
             href={link.href}
             target="_blank"
             rel="noreferrer"
-            className="group rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-slate-300 hover:bg-white hover:shadow-sm"
+            className="group rounded-2xl border border-[#ece5d8] bg-[#fcfbf8] p-4 transition hover:border-[#d4c09b] hover:bg-white hover:shadow-md"
           >
             <p className="text-lg font-black text-slate-900">{link.label}</p>
             <p className="mt-1 text-xs font-semibold text-slate-600">{link.desc}</p>
             <div className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-white">
               <img src="/assets/hero/nexo-smartboard.png" alt={`${link.label} 넥소 스마트보드 이미지`} className="h-28 w-full object-cover" />
             </div>
-            <p className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-bold text-white">공식 페이지 보기</p>
+            <p className="mt-3 inline-flex rounded-lg bg-slate-950 px-3 py-1.5 text-xs font-bold text-white">공식 페이지 보기</p>
           </a>
         ))}
       </div>
 
       {canCalculate ? (
-        <div className="mt-5 grid gap-4 rounded-2xl border border-slate-200 p-4">
+        <div className="mt-5 grid gap-4 rounded-2xl border border-[#ece5d8] bg-[#fcfbf8] p-4">
+          <div className="grid gap-3 lg:grid-cols-3">
+            <div className="rounded-2xl border border-[#ece5d8] bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a6d22]">1. 내 지원율</p>
+              <p className="mt-2 text-sm font-semibold text-slate-700">일반 50% 또는 우대지원 60% 중 해당 유형 선택</p>
+            </div>
+            <div className="rounded-2xl border border-[#ece5d8] bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a6d22]">2. 어떤 모델인지</p>
+              <p className="mt-2 text-sm font-semibold text-slate-700">65 / 75 / 86인치 중 도입할 모델과 수량 선택</p>
+            </div>
+            <div className="rounded-2xl border border-[#e6d19c] bg-[#fff7df] p-4">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a6d22]">3. 얼마나 내는지</p>
+              <p className="mt-2 text-sm font-semibold text-slate-700">계산 결과에서 정부지원금과 최종 입금 예상액 확인</p>
+            </div>
+          </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700">일반형</div>
 
@@ -164,11 +208,11 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
               className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
             >
               <option value="normal">일반 (정부지원 50%)</option>
-              <option value="vulnerable">특별 지원 대상 (장애인, 장애인기업, 간이과세자, 1인점포 / 정부지원 60%)</option>
+              <option value="vulnerable">우대지원 (장애인 사업주, 간이과세자, 1인 자영업자 / 정부지원 60%)</option>
             </select>
           </div>
           <p className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-600">
-            일반/특별 지원 대상 모두 현재 계산은 안내용이며, 실제 공고 시 정확한 할인율이 적용됩니다.
+            계산값은 신청 판단용 안내입니다. 실제 지원율 적용과 증빙 인정 여부는 공고 기준과 제출 서류에 따라 최종 확정됩니다.
           </p>
 
           <button
@@ -177,7 +221,7 @@ function SubsidySection({ policyOpen, policyYear, policyDataOverride }: SubsidyS
               setCalculated(true)
               track('calc_result', { supportRateType: input.supportRateType, model: input.model })
             }}
-            className="rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white"
+            className="rounded-xl bg-slate-950 px-4 py-3 text-sm font-bold text-white"
           >
             계산하기
           </button>

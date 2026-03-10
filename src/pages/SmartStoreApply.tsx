@@ -3,51 +3,49 @@ import StickyTopBar from '../components/StickyTopBar'
 import LeadModal from '../components/LeadModal'
 import Toast from '../components/Toast'
 import FloatingMobileCTA from '../components/FloatingMobileCTA'
+import StepProgressBar from '../components/StepProgressBar'
 import Footer from '../sections/Footer'
+import Hero from '../sections/Hero'
 import { getClientConfig } from '../lib/config'
+import ImageSlotPlaceholder from '../components/ImageSlotPlaceholder'
+import { imageSlots } from '../constants/imageSlots'
 
-const flow = ['확인서 발급 완료', '스마트상점 신청', '선정/계약', '설치/의무사용']
+const applyFlow = ['자격 확인', '스마트상점 접속', '전자칠판 선택', '신청서 작성', '제출 및 결과 확인']
 
-const steps = [
+const guideBlocks = [
   {
-    title: 'STEP 1. 확인서 발급 완료 확인',
-    desc: '유효한 소상공인 확인서가 준비되어 있어야 신청이 원활합니다.',
-    action: '확인서 유효기간/기업정보를 먼저 확인하세요.',
+    step: 'STEP 1',
+    title: '어디서 시작하는지',
+    description: '스마트상점 사이트에 접속한 뒤 대표자 명의로 로그인하고 일반형 공고에서 신청을 시작합니다.',
+    checklist: ['스마트상점 홈페이지 진입', '대표자 명의 회원가입 또는 로그인', '일반형 공고 선택'],
+    slotLabel: '시작 화면 캡처',
   },
   {
-    title: 'STEP 2. 스마트상점 사이트에서 제품 선택 후 신청',
-    desc: '넥소 등록 제품(65/75/86인치) 중 희망 모델을 선택하고 신청서를 제출합니다.',
-    action: '대표자 본인으로 신청하고, 연락처/이메일을 정확히 입력하세요.',
+    step: 'STEP 2',
+    title: '어떤 메뉴를 클릭하는지',
+    description: '일반형 공고에서 전자칠판 제품을 선택하고 희망 도입 순위를 입력하는 단계입니다.',
+    checklist: ['전자칠판 항목 선택', '넥소 모델 확인', '희망 도입 순위 선택'],
+    slotLabel: '기술 선택 캡처',
   },
   {
-    title: 'STEP 3. 선정 결과 확인 및 계약 진행',
-    desc: '심사 결과에 따라 선정 여부가 결정되며, 선정 시 계약/자부담 납부 절차가 진행됩니다.',
-    action: '보증보험 등 필수 안내를 확인하고 누락 없이 처리하세요.',
+    step: 'STEP 3',
+    title: '신청서를 어떻게 작성하는지',
+    description: '업체소개, 지원동기, 활용계획을 입력하고 최종제출 버튼으로 신청을 완료하는 단계입니다.',
+    checklist: ['업체소개 입력', '지원동기 입력', '활용계획 입력 후 최종제출'],
+    slotLabel: '신청서 작성 캡처',
   },
-  {
-    title: 'STEP 4. 설치 완료 및 2년 의무사용',
-    desc: '설치 후 의무사용 기간 동안 기준을 준수해야 합니다.',
-    action: '양도/재판매 금지 등 의무사항을 반드시 지켜주세요.',
-  },
-]
+] as const
 
-const productLinks = [
-  {
-    label: '65인치',
-    price: '3,000,000원',
-    href: 'https://www.sbiz.or.kr/smst/bsns/product/view.do?cmpnSn=1271&prdtSn=3&key=2111306033994&viewType=thumbnail&pageIndex=1&bsnsYrs=2026&sc=CMPN_NM&sw=%EB%84%A5%EC%86%8C&scPrdtTy=A',
-  },
-  {
-    label: '75인치',
-    price: '3,300,000원',
-    href: 'https://www.sbiz.or.kr/smst/bsns/product/view.do?cmpnSn=1271&prdtSn=4&key=2111306033994&viewType=thumbnail&pageIndex=1&bsnsYrs=2026&sc=CMPN_NM&sw=%EB%84%A5%EC%86%8C&scPrdtTy=A',
-  },
-  {
-    label: '86인치',
-    price: '4,400,000원',
-    href: 'https://www.sbiz.or.kr/smst/bsns/product/view.do?cmpnSn=1271&prdtSn=5&key=2111306033994&viewType=thumbnail&pageIndex=1&bsnsYrs=2026&sc=CMPN_NM&sw=%EB%84%A5%EC%86%8C&scPrdtTy=A',
-  },
-]
+const cautionImage = {
+  src: '/assets/extracted/incheon-20250521/image11.png',
+  alt: '스마트상점 기술보급사업 부당개입 금지 안내',
+}
+
+const cautionPoints = [
+  '대표자 본인이 직접 신청해야 하며 대리신청은 불가합니다.',
+  '접수된 서류는 수정 또는 삭제가 어려우므로 제출 전에 한 번 더 확인하는 편이 안전합니다.',
+  '매장 사진, 우대지원 증빙, 신청서 내용을 미리 준비하면 접수가 훨씬 수월합니다.',
+] as const
 
 function SmartStoreApply() {
   const config = useMemo(() => getClientConfig(), [])
@@ -55,61 +53,167 @@ function SmartStoreApply() {
   const [toastMessage, setToastMessage] = useState('')
 
   return (
-    <div className="bg-slate-50 text-slate-900">
+    <div className="bg-[radial-gradient(circle_at_top,#132a62_0%,#081127_18%,#060b19_42%,#04070f_100%)] text-slate-900">
       <StickyTopBar policyOpen={config.policy_open} onOpenConsult={() => setModalOpen(true)} />
       <main className="mx-auto w-full max-w-6xl px-4 pb-32 pt-6 sm:px-6 lg:px-8">
-        <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <h1 className="text-3xl font-black text-slate-900 sm:text-4xl">스마트상점 신청 방법</h1>
-          <p className="mt-3 text-sm text-slate-600">소상공인 확인서 발급을 끝낸 뒤, 아래 순서대로 진행하면 신청 흐름이 명확해집니다.</p>
+        <Hero config={config} onOpenConsult={() => setModalOpen(true)} />
+        <StepProgressBar />
+        <section className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
+          <h1 className="mt-2 text-3xl font-black tracking-tight text-white sm:text-4xl">스마트상점 사업 신청 가이드</h1>
+          <p className="mt-3 max-w-3xl text-sm text-slate-300">
+            스마트상점 신청 절차를 공고 기준에 맞춰 정리한 안내 페이지입니다. 대표자 본인 신청, 메뉴 선택, 신청서 작성, 서류 업로드 순서를 한 번에 확인할 수 있습니다.
+          </p>
+          <div className="mt-4 rounded-[1.5rem] border border-[#4e3c85] bg-[linear-gradient(180deg,rgba(31,24,64,0.98)_0%,rgba(14,15,38,0.96)_100%)] p-4">
+            <p className="text-sm font-black text-white">스마트상점 신청 사이트 URL</p>
+            <a
+              href="https://www.sbiz.or.kr/smst/index.do"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 block break-all text-sm font-bold text-[#ff8bf5]"
+            >
+              https://www.sbiz.or.kr/smst/index.do
+            </a>
+          </div>
           <div className="mt-5 flex flex-wrap gap-2">
-            {flow.map((item) => (
-              <span key={item} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+            {applyFlow.map((item) => (
+              <span key={item} className="rounded-full border border-[#79f0ff]/30 bg-[rgba(121,240,255,0.08)] px-3 py-1 text-xs font-semibold text-[#79f0ff]">
                 {item}
               </span>
             ))}
           </div>
         </section>
 
-        <section className="mt-6 grid gap-4">
-          {steps.map((step) => (
-            <article key={step.title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="text-xl font-extrabold text-slate-900">{step.title}</h2>
-              <p className="mt-2 text-sm text-slate-600">{step.desc}</p>
-              <p className="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700">{step.action}</p>
+        <section id="progress-check" className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
+          <h2 className="text-2xl font-black text-white">신청 전에 먼저 확인할 것</h2>
+          <div className="mt-4 grid gap-3 lg:grid-cols-3">
+            <div className="rounded-[1.5rem] border border-[#284f95] bg-[linear-gradient(180deg,rgba(13,29,69,0.95)_0%,rgba(7,17,41,0.95)_100%)] p-5">
+              <p className="text-sm font-bold text-white">1. 어디서 시작하는지</p>
+              <p className="mt-2 text-sm text-slate-300">대표자 명의 로그인과 공고 선택</p>
+            </div>
+            <div className="rounded-[1.5rem] border border-[#284f95] bg-[linear-gradient(180deg,rgba(13,29,69,0.95)_0%,rgba(7,17,41,0.95)_100%)] p-5">
+              <p className="text-sm font-bold text-white">2. 어떤 메뉴를 클릭하는지</p>
+              <p className="mt-2 text-sm text-slate-300">전자칠판 선택, 넥소 모델 확인, 희망순위 입력</p>
+            </div>
+            <div className="rounded-[1.5rem] border border-[#284f95] bg-[linear-gradient(180deg,rgba(13,29,69,0.95)_0%,rgba(7,17,41,0.95)_100%)] p-5">
+              <p className="text-sm font-bold text-white">3. 신청서를 어떻게 작성하는지</p>
+              <p className="mt-2 text-sm text-slate-300">업체소개, 지원동기, 활용계획 입력 후 최종제출</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-5">
+          {guideBlocks.map((block) => (
+            <article
+              key={block.step}
+              className="rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8"
+            >
+              <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+                <div>
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#79f0ff]">{block.step}</p>
+                  <h2 className="mt-2 text-2xl font-black text-white">{block.title}</h2>
+                  <p className="mt-3 text-sm text-slate-300">{block.description}</p>
+                  <ul className="mt-5 grid gap-2 text-sm text-slate-200">
+                    {block.checklist.map((item) => (
+                      <li key={item} className="rounded-xl border border-[#284f95] bg-[rgba(121,240,255,0.08)] px-4 py-3 font-semibold">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <ImageSlotPlaceholder
+                  label={
+                    block.step === 'STEP 1'
+                      ? imageSlots.applyGuide.start.label
+                      : block.step === 'STEP 2'
+                        ? imageSlots.applyGuide.menu.label
+                        : imageSlots.applyGuide.upload.label
+                  }
+                  src={
+                    block.step === 'STEP 1'
+                      ? imageSlots.applyGuide.start.src
+                      : block.step === 'STEP 2'
+                        ? imageSlots.applyGuide.menu.src
+                        : imageSlots.applyGuide.upload.src
+                  }
+                  alt={
+                    block.step === 'STEP 1'
+                      ? imageSlots.applyGuide.start.alt
+                      : block.step === 'STEP 2'
+                        ? imageSlots.applyGuide.menu.alt
+                        : imageSlots.applyGuide.upload.alt
+                  }
+                  note={
+                    block.step === 'STEP 1'
+                      ? imageSlots.applyGuide.start.note
+                      : block.step === 'STEP 2'
+                        ? imageSlots.applyGuide.menu.note
+                        : imageSlots.applyGuide.upload.note
+                  }
+                  plannedSrc={
+                    block.step === 'STEP 1'
+                      ? imageSlots.applyGuide.start.plannedSrc
+                      : block.step === 'STEP 2'
+                        ? imageSlots.applyGuide.menu.plannedSrc
+                        : imageSlots.applyGuide.upload.plannedSrc
+                  }
+                  sourceRef={
+                    block.step === 'STEP 1'
+                      ? imageSlots.applyGuide.start.sourceRef
+                      : block.step === 'STEP 2'
+                        ? imageSlots.applyGuide.menu.sourceRef
+                        : imageSlots.applyGuide.upload.sourceRef
+                  }
+                  minHeightClassName="min-h-80 xl:min-h-[28rem]"
+                />
+              </div>
             </article>
           ))}
         </section>
 
-        <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-2xl font-black text-slate-900">넥소 스마트상점 등록 제품 바로가기</h2>
-          <p className="mt-2 text-sm text-slate-600">모델별 상세 페이지에서 제품 정보 확인 후 바로 신청할 수 있습니다.</p>
-          <div className="mt-5 grid gap-3 sm:grid-cols-3">
-            {productLinks.map((product) => (
-              <a
-                key={product.label}
-                href={product.href}
-                target="_blank"
-                rel="noreferrer"
-                className="group rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-slate-300 hover:bg-white hover:shadow-sm"
-              >
-                <p className="text-lg font-black text-slate-900">{product.label}</p>
-                <p className="mt-1 text-sm font-semibold text-slate-700">등록가 {product.price}</p>
-                <div className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-white">
-                  <img src="/assets/hero/nexo-smartboard.png" alt={`${product.label} 넥소 스마트보드 이미지`} className="h-28 w-full object-cover" />
-                </div>
-                <p className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-bold text-white">
-                  스마트상점 페이지 이동
+        <section className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
+          <h2 className="text-2xl font-black text-white">자주 막히는 지점</h2>
+          <div className="mt-4 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <ImageSlotPlaceholder
+              label="부당개입 금지 안내"
+              src={cautionImage.src}
+              alt={cautionImage.alt}
+              minHeightClassName="min-h-72"
+            />
+            <div className="grid gap-3">
+              {cautionPoints.map((point) => (
+                <p key={point} className="rounded-xl border border-[#4e3c85] bg-[rgba(255,139,245,0.08)] px-4 py-3 text-sm font-semibold text-slate-200">
+                  {point}
                 </p>
-              </a>
-            ))}
+              ))}
+            </div>
           </div>
-          <div className="mt-5 flex flex-col gap-2 sm:flex-row">
-            <a href="/certificate-guide" className="rounded-xl border border-slate-300 px-4 py-3 text-center text-sm font-bold text-slate-700">
-              소상공인 확인서 발급 가이드 보기
-            </a>
-            <button type="button" onClick={() => setModalOpen(true)} className="rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white">
-              상담 신청
-            </button>
+        </section>
+
+        <section className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
+          <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+            <div>
+              <h2 className="mt-2 text-2xl font-black text-white">선정 이후 진행 흐름</h2>
+              <p className="mt-3 text-sm text-slate-300">
+                2026 기술기업용 홈페이지 절차 기준으로 기술신청 확인, 계약체결, 대금요청, 현장점검 및 정산 흐름을 한 화면에서 확인할 수 있습니다.
+              </p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <a href="/certificate-guide" className="rounded-xl border border-[#79f0ff]/40 bg-[rgba(121,240,255,0.08)] px-4 py-3 text-center text-sm font-bold text-white">
+                  확인서 발급 가이드 보기
+                </a>
+                <button type="button" onClick={() => setModalOpen(true)} className="rounded-xl bg-[#ff8bf5] px-4 py-3 text-sm font-bold text-[#1a0b24]">
+                  신청 전 상담 신청
+                </button>
+              </div>
+            </div>
+            <ImageSlotPlaceholder
+              label={imageSlots.applyGuide.timeline.label}
+              src={imageSlots.applyGuide.timeline.src}
+              alt={imageSlots.applyGuide.timeline.alt}
+              note={imageSlots.applyGuide.timeline.note}
+              plannedSrc={imageSlots.applyGuide.timeline.plannedSrc}
+              sourceRef={imageSlots.applyGuide.timeline.sourceRef}
+              minHeightClassName="min-h-72 xl:min-h-[24rem]"
+            />
           </div>
         </section>
 

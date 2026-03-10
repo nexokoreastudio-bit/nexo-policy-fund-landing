@@ -70,7 +70,7 @@ export function evaluateEligibility(input: EligibilityInput): EligibilityResult 
   const vulnerableChecked =
     input.vulnerable.simpleTaxpayer || input.vulnerable.onePersonBusiness || input.vulnerable.disabledBusiness
   if (vulnerableChecked && !input.docReady) {
-    reasons.push('특별 지원 대상 증빙서류 준비 가능 여부가 확인되지 않았습니다.')
+    reasons.push('우대지원 증빙서류 준비 가능 여부가 확인되지 않았습니다.')
     actions.push('증빙 발급 가능 여부를 먼저 확인하면 신청 정확도가 올라갑니다.')
   }
 

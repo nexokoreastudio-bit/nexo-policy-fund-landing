@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 const checklistItems = [
   '매장 전면/내부 사진',
-  '특별 지원 대상 증빙(간이과세자/1인/장애인)',
+  '우대지원 증빙(간이과세자/1인 자영업자/장애인 사업주)',
   '대표자 연락처(문자/이메일 정확히)',
   '(선정 후) 지급보증보험',
 ]
@@ -30,7 +30,7 @@ function DocumentsChecklist() {
   return (
     <section id="documents" className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       <h2 className="text-2xl font-extrabold text-slate-900">준비서류 체크리스트</h2>
-      <p className="mt-2 text-sm text-slate-600">특별 지원 대상 증빙은 신청 마감일 기준 1개월 이내 발급 권장</p>
+      <p className="mt-2 text-sm text-slate-600">우대지원 증빙서류는 신청 전에 최신본으로 준비해 두는 편이 안전합니다.</p>
       <ul className="mt-4 space-y-2">
         {checklistItems.map((item) => (
           <li key={item} className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3">
@@ -38,7 +38,7 @@ function DocumentsChecklist() {
               <input type="checkbox" checked={Boolean(checked[item])} onChange={(event) => toggle(item, event.target.checked)} />
               {item}
             </label>
-            <span className="text-xs text-slate-400">placeholder 다운로드</span>
+            <span className="text-xs text-slate-400">준비 여부 체크</span>
           </li>
         ))}
       </ul>

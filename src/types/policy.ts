@@ -3,6 +3,9 @@ export type AppConfig = {
   policy_open: boolean
   official_url: string
   announce_url: string
+  support_rate_normal: number
+  support_rate_special: number
+  support_max_amount: number
 }
 
 export type PolicyData = {
