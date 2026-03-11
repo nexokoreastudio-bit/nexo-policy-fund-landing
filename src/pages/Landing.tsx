@@ -53,8 +53,8 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
       <main className="mx-auto w-full max-w-6xl px-4 pb-32 pt-6 sm:px-6 lg:px-8">
         <Hero config={config} onOpenConsult={openConsult} />
         <StepProgressBar />
-        <RelatedSitesPanel />
         <SupportComparisonSection config={config} policyData={policyData} />
+        <RelatedSitesPanel />
         <ConversionChecklistSection onOpenConsult={openConsult} />
         <DocumentsGuideSection />
         <ApplicationJourneySection />

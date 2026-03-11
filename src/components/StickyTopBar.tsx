@@ -11,8 +11,6 @@ function StickyTopBar({ policyOpen, onOpenConsult }: StickyTopBarProps) {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <a href="/" className="flex items-center gap-3 text-slate-900">
           <div className="hidden items-center gap-2 sm:flex">
-            <img src="/assets/landing/logo_1.png" alt="넥소 로고" className="h-7 w-auto object-contain" />
-            <img src="/assets/landing/logo_2.png" alt="스마트상점 로고" className="h-7 w-auto object-contain opacity-90" />
             <img src="/assets/landing/nexo_logo_black.png" alt="넥소 블랙 로고" className="h-7 w-auto object-contain" />
           </div>
           <span className="text-base font-black tracking-tight sm:text-lg">넥소 스마트상점 지원사업</span>
