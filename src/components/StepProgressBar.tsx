@@ -19,10 +19,10 @@ function StepProgressBar() {
   const activeStep = resolveActiveStep(location.pathname, location.hash)
 
   return (
-    <section className="mt-6 rounded-[1.75rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-4 text-white shadow-[0_18px_40px_rgba(4,10,30,0.32)] ring-1 ring-white/5 sm:p-5">
+    <section className="mt-6 rounded-[1.75rem] border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f5f8fc_100%)] p-4 text-slate-900 shadow-[0_18px_40px_rgba(15,23,42,0.08)] sm:p-5">
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h2 className="text-base font-black tracking-tight text-white sm:text-lg">단계별 진행 안내</h2>
-        <p className="text-xs font-semibold text-slate-300 sm:text-sm">현재 진행 중인 단계가 자동으로 강조됩니다.</p>
+        <h2 className="text-base font-black tracking-tight text-slate-900 sm:text-lg">단계별 진행 안내</h2>
+        <p className="text-xs font-semibold text-slate-500 sm:text-sm">현재 보고 있는 단계가 자동으로 강조됩니다.</p>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-1">
         {steps.map((step) => {
@@ -33,12 +33,12 @@ function StepProgressBar() {
               to={step.href}
               className={`min-w-[148px] flex-1 rounded-[1.25rem] border px-4 py-3 transition ${
                 isActive
-                  ? 'border-[#79f0ff] bg-[rgba(121,240,255,0.14)] shadow-[0_0_24px_rgba(121,240,255,0.18)]'
-                  : 'border-white/10 bg-[rgba(255,255,255,0.04)] hover:border-[#79f0ff]/40 hover:bg-[rgba(121,240,255,0.08)]'
+                  ? 'border-[#244a86] bg-[linear-gradient(180deg,#eff5ff_0%,#e0ecff_100%)] shadow-[0_12px_24px_rgba(36,74,134,0.12)]'
+                  : 'border-[#dde5f0] bg-white hover:border-[#9bb6dd] hover:bg-[#f8fbff]'
               }`}
             >
-              <p className={`text-xs font-black tracking-[0.14em] ${isActive ? 'text-[#79f0ff]' : 'text-slate-400'}`}>{step.label}</p>
-              <p className="mt-2 text-base font-black text-white">{step.title}</p>
+              <p className={`text-xs font-black tracking-[0.14em] ${isActive ? 'text-[#244a86]' : 'text-slate-400'}`}>{step.label}</p>
+              <p className="mt-2 text-base font-black text-slate-900">{step.title}</p>
             </Link>
           )
         })}

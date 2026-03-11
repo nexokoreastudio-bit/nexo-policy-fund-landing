@@ -48,42 +48,42 @@ function StepList({ steps, accentClass }: { steps: string[]; accentClass: string
 
 export function RelatedSitesPanel() {
   return (
-    <div className="mt-8 mb-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-5 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-6">
-      <h2 className="text-2xl font-black tracking-tight text-white">관련 사이트 바로가기</h2>
+    <div className="mt-8 mb-6 rounded-[2rem] border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-5 text-slate-900 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:p-6">
+      <h2 className="text-2xl font-black tracking-tight text-slate-950">관련 사이트와 문의처</h2>
       <div className="mt-4 grid gap-3 lg:grid-cols-2">
         <a
           href="https://sminfo.mss.go.kr/"
           target="_blank"
           rel="noreferrer"
-          className="rounded-[1.25rem] border border-[#2e5fb4] bg-[linear-gradient(180deg,rgba(13,29,69,0.95)_0%,rgba(7,17,41,0.95)_100%)] px-4 py-4 transition hover:shadow-md"
+          className="rounded-[1.25rem] border border-[#d9e6f7] bg-white px-4 py-4 transition hover:shadow-md"
         >
-          <p className="text-sm font-black text-white">소상공인 확인서 발급 사이트</p>
-          <p className="mt-2 break-all text-sm font-semibold text-[#79f0ff]">https://sminfo.mss.go.kr/</p>
+          <p className="text-sm font-black text-slate-900">소상공인 확인서 발급 사이트</p>
+          <p className="mt-2 break-all text-sm font-semibold text-[#244a86]">https://sminfo.mss.go.kr/</p>
         </a>
         <a
           href="https://www.sbiz.or.kr/smst/index.do"
           target="_blank"
           rel="noreferrer"
-          className="rounded-[1.25rem] border border-[#4e3c85] bg-[linear-gradient(180deg,rgba(31,24,64,0.98)_0%,rgba(14,15,38,0.96)_100%)] px-4 py-4 transition hover:shadow-md"
+          className="rounded-[1.25rem] border border-[#d9e6f7] bg-white px-4 py-4 transition hover:shadow-md"
         >
-          <p className="text-sm font-black text-white">스마트상점 신청 사이트</p>
-          <p className="mt-2 break-all text-sm font-semibold text-[#ff8bf5]">https://www.sbiz.or.kr/smst/index.do</p>
+          <p className="text-sm font-black text-slate-900">스마트상점 신청 사이트</p>
+          <p className="mt-2 break-all text-sm font-semibold text-[#244a86]">https://www.sbiz.or.kr/smst/index.do</p>
         </a>
       </div>
-      <div className="mt-4 grid gap-5 rounded-[1.5rem] border border-[#2e5fb4] bg-[linear-gradient(135deg,rgba(10,27,62,0.98)_0%,rgba(8,17,40,0.95)_100%)] px-5 py-5 shadow-[0_18px_36px_rgba(4,10,30,0.28)] lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
+      <div className="mt-4 grid gap-5 rounded-[1.5rem] border border-[#d9e6f7] bg-[linear-gradient(180deg,#ffffff_0%,#f6f9fd_100%)] px-5 py-5 shadow-[0_18px_36px_rgba(15,23,42,0.06)] lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
         <div className="flex h-full flex-col justify-center">
-          <span className="inline-flex w-fit rounded-full border border-[#79f0ff]/25 bg-[rgba(121,240,255,0.08)] px-3 py-1 text-xs font-black tracking-[0.16em] text-[#79f0ff]">
+          <span className="inline-flex w-fit rounded-full border border-[#ccd9eb] bg-[#eef4fb] px-3 py-1 text-xs font-black tracking-[0.16em] text-[#244a86]">
             HELP DESK
           </span>
-          <p className="mt-4 text-2xl font-black tracking-tight text-white sm:text-3xl">확인서 진행 중 막히면 지역별 문의처를 먼저 확인하세요.</p>
-          <p className="mt-3 text-sm font-semibold text-slate-300 sm:text-base">
+          <p className="mt-4 text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">진행 중 막히면 지역별 문의처를 먼저 확인하세요.</p>
+          <p className="mt-3 text-sm font-semibold text-slate-600 sm:text-base">
             지방중소벤처기업청 전화번호와 주소를 조회할 수 있는 페이지입니다. 지역마다 번호가 달라 바로 확인하는 편이 가장 빠릅니다.
           </p>
           <div className="mt-5 grid gap-2 sm:grid-cols-2">
-            <div className="rounded-xl border border-[#79f0ff]/20 bg-[rgba(121,240,255,0.08)] px-4 py-3 text-sm font-semibold text-slate-100">
+            <div className="rounded-xl border border-[#dde5f0] bg-white px-4 py-3 text-sm font-semibold text-slate-700">
               지역별 전화번호 확인
             </div>
-            <div className="rounded-xl border border-[#ff8bf5]/20 bg-[rgba(255,139,245,0.08)] px-4 py-3 text-sm font-semibold text-slate-100">
+            <div className="rounded-xl border border-[#dde5f0] bg-white px-4 py-3 text-sm font-semibold text-slate-700">
               발급 문의처 바로 이동
             </div>
           </div>
@@ -91,7 +91,7 @@ export function RelatedSitesPanel() {
             href="https://sminfo.mss.go.kr/cm/sv/CSV001R9.do"
             target="_blank"
             rel="noreferrer"
-            className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#79f0ff] px-5 py-3 text-sm font-bold text-[#04101f] shadow-[0_0_24px_rgba(121,240,255,0.35)]"
+            className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#244a86] px-5 py-3 text-sm font-bold text-white shadow-[0_14px_28px_rgba(36,74,134,0.18)]"
           >
             문의처 확인하기
           </a>
@@ -100,15 +100,15 @@ export function RelatedSitesPanel() {
           href="https://sminfo.mss.go.kr/cm/sv/CSV001R9.do"
           target="_blank"
           rel="noreferrer"
-          className="group relative block overflow-hidden rounded-[1.25rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(24,43,95,0.92)_0%,rgba(16,29,67,0.96)_100%)] p-4 shadow-[0_18px_36px_rgba(4,10,30,0.24)]"
+          className="group relative block overflow-hidden rounded-[1.25rem] border border-[#d9e6f7] bg-white p-4 shadow-[0_18px_36px_rgba(15,23,42,0.06)]"
         >
           <img
             src="/assets/landing/info.png"
             alt="중소기업확인서 발급 절차 및 문의처 안내 이미지"
             className="block h-auto w-full rounded-lg transition duration-200 group-hover:scale-[1.01] group-hover:opacity-90"
           />
-          <div className="pointer-events-none absolute inset-4 flex items-center justify-center rounded-lg bg-slate-950/0 transition duration-200 group-hover:bg-slate-950/45">
-            <span className="rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-black text-white opacity-0 backdrop-blur-sm transition duration-200 group-hover:opacity-100">
+          <div className="pointer-events-none absolute inset-4 flex items-center justify-center rounded-lg bg-slate-950/0 transition duration-200 group-hover:bg-slate-950/18">
+            <span className="rounded-full border border-white/60 bg-white/88 px-4 py-2 text-sm font-black text-slate-900 opacity-0 backdrop-blur-sm transition duration-200 group-hover:opacity-100">
               문의처로 이동
             </span>
           </div>

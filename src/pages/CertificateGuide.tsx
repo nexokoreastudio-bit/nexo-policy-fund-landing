@@ -4,24 +4,37 @@ import LeadModal from '../components/LeadModal'
 import Toast from '../components/Toast'
 import FloatingMobileCTA from '../components/FloatingMobileCTA'
 import StepProgressBar from '../components/StepProgressBar'
+import GuidedStepViewer from '../components/GuidedStepViewer'
 import Footer from '../sections/Footer'
 import Hero from '../sections/Hero'
 import { getClientConfig } from '../lib/config'
-import guideDataRaw from '../data/certificate-guide.ko.json'
 import ImageSlotPlaceholder from '../components/ImageSlotPlaceholder'
 import { imageSlots } from '../constants/imageSlots'
-import type { CertificateGuideData, CertificateTrackKey } from '../types/certificate'
+import { certificateGeneralSteps, certificateStartupSteps } from '../constants/guidedSteps'
+import type { CertificateTrackKey } from '../types/certificate'
 
-const guideData = guideDataRaw as CertificateGuideData
 const trackKeys: CertificateTrackKey[] = ['general', 'startup']
+const trackContent = {
+  general: {
+    label: '일반 사업자',
+    description: '기존 사업자라면 자료 제출부터 출력까지 7단계만 차례대로 따라가면 됩니다.',
+    helper: '자료 제출과 신청서 작성 단계가 핵심입니다.',
+    steps: certificateGeneralSteps,
+  },
+  startup: {
+    label: '창업 기업',
+    description: '창업 기업은 비교적 짧은 3단계 절차로 진행할 수 있습니다.',
+    helper: '회원가입 후 신청서 작성과 즉시 출력 흐름을 확인하세요.',
+    steps: certificateStartupSteps,
+  },
+} as const
 
 function CertificateGuide() {
   const config = useMemo(() => getClientConfig(), [])
   const [modalOpen, setModalOpen] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
   const [selectedTrack, setSelectedTrack] = useState<CertificateTrackKey>('general')
-  const activeTrack = guideData[selectedTrack]
-  const activeSlots = selectedTrack === 'general' ? imageSlots.certificateGuide.general : imageSlots.certificateGuide.startup
+  const activeTrack = trackContent[selectedTrack]
 
   return (
     <div className="bg-[radial-gradient(circle_at_top,#132a62_0%,#081127_18%,#060b19_42%,#04070f_100%)] text-slate-900">
@@ -97,7 +110,7 @@ function CertificateGuide() {
         <section className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-4 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-6">
           <div className="grid grid-cols-2 gap-2">
             {trackKeys.map((trackKey) => {
-              const track = guideData[trackKey]
+              const track = trackContent[trackKey]
               const isActive = selectedTrack === trackKey
               return (
                 <button
@@ -114,77 +127,89 @@ function CertificateGuide() {
             })}
           </div>
           <p className="mt-3 text-sm text-slate-300">{activeTrack.description}</p>
+          <p className="mt-2 text-sm font-semibold text-[#79f0ff]">{activeTrack.helper}</p>
         </section>
 
         <section className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
-          <h2 className="text-2xl font-black text-white">이 페이지에서 확인할 내용</h2>
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h2 className="text-2xl font-black text-white">한 단계씩 따라가는 발급 흐름</h2>
+              <p className="mt-2 max-w-3xl text-sm text-slate-300">
+                긴 설명을 스크롤로 읽지 않아도 됩니다. 현재 단계에서 해야 할 일과 화면 예시를 함께 보면서 왼쪽에서 오른쪽으로 차례대로 따라가면 됩니다.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-[#2e5fb4] bg-[rgba(121,240,255,0.08)] px-4 py-3 text-sm font-semibold text-[#79f0ff]">
+              좌우 화살표 또는 하단 단계 버튼으로 바로 이동
+            </div>
+          </div>
           <div className="mt-4 grid gap-3 lg:grid-cols-3">
             <div className="rounded-[1.5rem] border border-[#284f95] bg-[linear-gradient(180deg,rgba(13,29,69,0.95)_0%,rgba(7,17,41,0.95)_100%)] p-5">
-              <p className="text-sm font-bold text-white">1. 어디서 발급하는지</p>
-              <p className="mt-2 text-sm text-slate-300">SMINFO 또는 해당 발급 시스템 진입 화면</p>
+              <p className="text-sm font-bold text-white">1. 어디서 시작하는지</p>
+              <p className="mt-2 text-sm text-slate-300">발급 사이트 접속과 현재 트랙 확인</p>
             </div>
             <div className="rounded-[1.5rem] border border-[#284f95] bg-[linear-gradient(180deg,rgba(13,29,69,0.95)_0%,rgba(7,17,41,0.95)_100%)] p-5">
               <p className="text-sm font-bold text-white">2. 어떤 순서로 진행하는지</p>
-              <p className="mt-2 text-sm text-slate-300">가입, 정보 입력, 자료 제출, 진행 확인, 출력</p>
+              <p className="mt-2 text-sm text-slate-300">한 단계씩 넘기며 자료 제출, 신청, 출력 진행</p>
             </div>
             <div className="rounded-[1.5rem] border border-[#284f95] bg-[linear-gradient(180deg,rgba(13,29,69,0.95)_0%,rgba(7,17,41,0.95)_100%)] p-5">
-              <p className="text-sm font-bold text-white">3. 어디서 막히는지</p>
-              <p className="mt-2 text-sm text-slate-300">자료 제출, 사업자 정보 입력, 출력 직전 단계</p>
+              <p className="text-sm font-bold text-white">3. 지금 무엇을 해야 하는지</p>
+              <p className="mt-2 text-sm text-slate-300">메뉴, 준비물, 주의사항을 현재 단계 카드로 안내</p>
             </div>
           </div>
         </section>
 
-        <section className="mt-6 grid gap-5">
-          {activeTrack.steps.map((step, stepIndex) => (
-            <article
-              key={`${selectedTrack}-${step.title}`}
-              className="rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8"
-            >
-              <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-                <div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full bg-[#79f0ff] px-3 py-1 text-xs font-bold text-[#04101f]">STEP {stepIndex + 1}</span>
-                    <h2 className="text-xl font-black text-white">{step.title}</h2>
-                  </div>
-                  <p className="mt-3 text-sm text-slate-300">{step.desc}</p>
-                  {step.tip ? (
-                    <p className="mt-4 rounded-xl border border-[#2e5fb4] bg-[rgba(121,240,255,0.08)] px-4 py-3 text-sm font-semibold text-[#79f0ff]">
-                      {step.tip}
-                    </p>
-                  ) : null}
-                  {selectedTrack === 'general' && stepIndex === 0 ? (
-                    <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                      <a
-                        href="https://sminfo.mss.go.kr/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex rounded-xl bg-[#79f0ff] px-4 py-3 text-sm font-bold text-[#04101f]"
-                      >
-                        소상공인 확인서 발급 바로가기
-                      </a>
-                      <a
-                        href="https://sminfo.mss.go.kr/cm/sv/CSV001R9.do"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex rounded-xl border border-[#ff8bf5]/40 bg-[rgba(255,139,245,0.08)] px-4 py-3 text-sm font-bold text-[#ff8bf5]"
-                      >
-                        지역별 문의처 확인
-                      </a>
-                    </div>
-                  ) : null}
-                </div>
-                <ImageSlotPlaceholder
-                  label={activeSlots[stepIndex]?.label ?? `${selectedTrack} STEP ${stepIndex + 1} 이미지 슬롯`}
-                  src={activeSlots[stepIndex]?.src}
-                  alt={activeSlots[stepIndex]?.alt}
-                  note={activeSlots[stepIndex]?.note}
-                  plannedSrc={activeSlots[stepIndex]?.plannedSrc}
-                  sourceRef={activeSlots[stepIndex]?.sourceRef}
-                  minHeightClassName="min-h-[28rem] xl:min-h-[36rem]"
-                />
+        <section className="mt-6">
+          <GuidedStepViewer steps={activeTrack.steps} ariaLabel={`${activeTrack.label} 확인서 발급 단계별 안내`} />
+        </section>
+
+        <section className="mt-6 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+          <article className="rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
+            <h2 className="text-2xl font-black text-white">막히면 바로 확인할 곳</h2>
+            <p className="mt-3 text-sm text-slate-300">
+              발급 중 인증, 자료 제출, 출력 단계에서 막히면 지역별 문의처를 먼저 확인하는 편이 가장 빠릅니다.
+            </p>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-[#2e5fb4] bg-[rgba(121,240,255,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                인증 또는 자료 제출 오류 확인
               </div>
-            </article>
-          ))}
+              <div className="rounded-2xl border border-[#ff8bf5]/20 bg-[rgba(255,139,245,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                지역별 문의처 바로 이동
+              </div>
+            </div>
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="https://sminfo.mss.go.kr/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-xl bg-[#79f0ff] px-5 py-3 text-sm font-bold text-[#04101f]"
+              >
+                발급 사이트 열기
+              </a>
+              <a
+                href="https://sminfo.mss.go.kr/cm/sv/CSV001R9.do"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-xl border border-[#ff8bf5]/40 bg-[rgba(255,139,245,0.08)] px-5 py-3 text-sm font-bold text-[#ff8bf5]"
+              >
+                지역별 문의처 확인
+              </a>
+            </div>
+          </article>
+
+          <article className="rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
+            <h2 className="text-2xl font-black text-white">이런 분에게 맞습니다</h2>
+            <div className="mt-4 grid gap-3">
+              <p className="rounded-2xl border border-[#284f95] bg-[rgba(121,240,255,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                확인서 발급이 처음이라 화면 순서를 한 번에 보기 어려운 분
+              </p>
+              <p className="rounded-2xl border border-[#284f95] bg-[rgba(121,240,255,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                자료 제출과 신청서 작성 중 어디서 막히는지 미리 알고 싶은 분
+              </p>
+              <p className="rounded-2xl border border-[#284f95] bg-[rgba(121,240,255,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                스마트상점 신청 전에 확인서를 빠르게 준비하려는 분
+              </p>
+            </div>
+          </article>
         </section>
 
         <section className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
