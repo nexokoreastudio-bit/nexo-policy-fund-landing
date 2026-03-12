@@ -252,12 +252,157 @@ async function appendRows(params: {
 }) {
   const { sheets, spreadsheetId, range, values } = params
 
-  await sheets.spreadsheets.values.append({
+  return sheets.spreadsheets.values.append({
     spreadsheetId,
     range,
     valueInputOption: 'USER_ENTERED',
+    insertDataOption: 'INSERT_ROWS',
     requestBody: {
       values: [values],
+    },
+  })
+}
+
+function parseUpdatedRowNumber(updatedRange: string | null | undefined) {
+  if (!updatedRange) return null
+  const match = updatedRange.match(/![A-Z]+(\d+):[A-Z]+(\d+)$/)
+  if (!match) return null
+  return Number(match[1] ?? match[2])
+}
+
+async function setupConsultManagerRow(params: {
+  sheets: ReturnType<typeof google.sheets>
+  spreadsheetId: string
+  sheetTitle: string
+  rowNumber: number
+}) {
+  const { sheets, spreadsheetId, sheetTitle, rowNumber } = params
+  const sheetMeta = await sheets.spreadsheets.get({
+    spreadsheetId,
+    fields: 'sheets.properties(sheetId,title)',
+  })
+
+  const targetSheet = sheetMeta.data.sheets?.find((sheet) => sheet.properties?.title === sheetTitle)
+  const sheetId = targetSheet?.properties?.sheetId
+  if (sheetId == null) return
+
+  const rowIndex = rowNumber - 1
+
+  await sheets.spreadsheets.batchUpdate({
+    spreadsheetId,
+    requestBody: {
+      requests: [
+        {
+          setDataValidation: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 9,
+              endColumnIndex: 10,
+            },
+            rule: {
+              condition: {
+                type: 'ONE_OF_LIST',
+                values: [{ userEnteredValue: '상담1' }, { userEnteredValue: '상담2' }, { userEnteredValue: '상담3' }],
+              },
+              strict: true,
+              showCustomUi: true,
+            },
+          },
+        },
+        {
+          setDataValidation: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 10,
+              endColumnIndex: 11,
+            },
+            rule: {
+              condition: {
+                type: 'ONE_OF_LIST',
+                values: [{ userEnteredValue: '미진행' }, { userEnteredValue: '진행중' }, { userEnteredValue: '상담완료' }],
+              },
+              strict: true,
+              showCustomUi: true,
+            },
+          },
+        },
+        {
+          setDataValidation: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 13,
+              endColumnIndex: 14,
+            },
+            rule: {
+              condition: {
+                type: 'ONE_OF_LIST',
+                values: [
+                  { userEnteredValue: '미확인' },
+                  { userEnteredValue: '신청완료' },
+                  { userEnteredValue: '신청예정' },
+                  { userEnteredValue: '해당없음' },
+                ],
+              },
+              strict: true,
+              showCustomUi: true,
+            },
+          },
+        },
+        {
+          setDataValidation: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 11,
+              endColumnIndex: 12,
+            },
+            rule: {
+              condition: { type: 'BOOLEAN' },
+              strict: true,
+              showCustomUi: true,
+            },
+          },
+        },
+        {
+          setDataValidation: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 12,
+              endColumnIndex: 13,
+            },
+            rule: {
+              condition: { type: 'BOOLEAN' },
+              strict: true,
+              showCustomUi: true,
+            },
+          },
+        },
+        {
+          setDataValidation: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 14,
+              endColumnIndex: 15,
+            },
+            rule: {
+              condition: { type: 'BOOLEAN' },
+              strict: true,
+              showCustomUi: true,
+            },
+          },
+        },
+      ],
     },
   })
 }
@@ -311,12 +456,23 @@ async function appendToSheet(payload: LeadPayload) {
 
   const consultManagerRow = toConsultManagerRow(payload)
   if (consultManagerRow) {
-    await appendRows({
+    const appendResponse = await appendRows({
       sheets,
       spreadsheetId,
       range: toSheetRange(CONSULT_MANAGER_SHEET_TITLE),
       values: consultManagerRow,
     })
+
+    const updatedRange = appendResponse.data.updates?.updatedRange
+    const rowNumber = parseUpdatedRowNumber(updatedRange)
+    if (rowNumber) {
+      await setupConsultManagerRow({
+        sheets,
+        spreadsheetId,
+        sheetTitle: CONSULT_MANAGER_SHEET_TITLE,
+        rowNumber,
+      })
+    }
   }
 
   const partnerRaw = resolvePartnerName(payload)
