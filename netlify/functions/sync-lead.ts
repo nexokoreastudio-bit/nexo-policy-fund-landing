@@ -15,8 +15,63 @@ function toInquiryLabel(type: LeadPayload['inquiry_type']) {
   return type === 'policy_waitlist' ? '공지 알림 신청' : '상담 신청'
 }
 
+function getHeaders(type: LeadPayload['inquiry_type']) {
+  if (type === 'policy_waitlist') {
+    return [
+      '접수일시',
+      '신청유형',
+      '이름',
+      '연락처',
+      '이메일',
+      '지역',
+      '관심 인치',
+      '태그',
+      '개인정보 동의',
+      '업체코드',
+      '업체명',
+      '유입 URL',
+      '리퍼러',
+      'UTM Source',
+      'UTM Medium',
+      'UTM Campaign',
+      'UTM Content',
+    ]
+  }
+
+  return [
+    '접수일시',
+    '신청유형',
+    '대표자 성명',
+    '대표자 연락처',
+    '상호',
+    '담당자 성명',
+    '담당자 연락처',
+    '주소',
+    '상세 주소',
+    '상담 가능 시간',
+    '지역',
+    '지원 유형',
+    '추가 문의 내용',
+    '개인정보 동의',
+    '업체코드',
+    '업체명',
+    '유입 URL',
+    '리퍼러',
+    'UTM Source',
+    'UTM Medium',
+    'UTM Campaign',
+    'UTM Content',
+  ]
+}
+
 function toRow(payload: LeadPayload) {
   const base = [payload.created_at, toInquiryLabel(payload.inquiry_type)]
+  const partner = [
+    String(payload.formData.partner_code ?? ''),
+    String(payload.formData.partner_name ?? ''),
+    String(payload.formData.entry_url ?? ''),
+    String(payload.formData.referrer ?? ''),
+  ]
   const utm = [
     String(payload.formData.utm_source ?? ''),
     String(payload.formData.utm_medium ?? ''),
@@ -34,6 +89,7 @@ function toRow(payload: LeadPayload) {
       String(payload.formData.interestInch ?? ''),
       String(payload.formData.tag ?? ''),
       String(payload.formData.agree ?? ''),
+      ...partner,
       ...utm,
     ]
   }
@@ -52,8 +108,91 @@ function toRow(payload: LeadPayload) {
     String(payload.formData.support_type ?? ''),
     String(payload.formData.message ?? ''),
     String(payload.formData.agree ?? ''),
+    ...partner,
     ...utm,
   ]
+}
+
+function sanitizeSheetTitle(value: string) {
+  return value
+    .replace(/[\[\]\*\/\\\?\:]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 80)
+}
+
+function toSheetRange(sheetTitle: string, range = 'A:Z') {
+  const escapedTitle = sheetTitle.replace(/'/g, "''")
+  return `'${escapedTitle}'!${range}`
+}
+
+async function ensureSheetExists(params: {
+  sheets: ReturnType<typeof google.sheets>
+  spreadsheetId: string
+  title: string
+  headers: string[]
+}) {
+  const { sheets, spreadsheetId, title, headers } = params
+  const meta = await sheets.spreadsheets.get({
+    spreadsheetId,
+    fields: 'sheets.properties.title',
+  })
+
+  const exists = meta.data.sheets?.some((sheet) => sheet.properties?.title === title)
+
+  if (!exists) {
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      requestBody: {
+        requests: [
+          {
+            addSheet: {
+              properties: {
+                title,
+              },
+            },
+          },
+        ],
+      },
+    })
+  }
+
+  const headerRange = toSheetRange(title, '1:1')
+  const headerResponse = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: headerRange,
+  })
+
+  const hasHeader = Boolean(headerResponse.data.values?.[0]?.length)
+
+  if (!hasHeader) {
+    await sheets.spreadsheets.values.update({
+      spreadsheetId,
+      range: headerRange,
+      valueInputOption: 'USER_ENTERED',
+      requestBody: {
+        values: [headers],
+      },
+    })
+  }
+}
+
+async function appendRows(params: {
+  sheets: ReturnType<typeof google.sheets>
+  spreadsheetId: string
+  range: string
+  values: string[]
+}) {
+  const { sheets, spreadsheetId, range, values } = params
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId,
+    range,
+    valueInputOption: 'USER_ENTERED',
+    requestBody: {
+      values: [values],
+    },
+  })
 }
 
 async function appendToSheet(payload: LeadPayload) {
@@ -77,21 +216,42 @@ async function appendToSheet(payload: LeadPayload) {
   const consultSheetId = getEnv('CONSULT_SHEET_ID', '1W_LyImnYkP4fsOZgfQsAFw8xTP1j2cZM7b3A-ohK0bA')
   const waitlistRange = getEnv('WAITLIST_SHEET_RANGE', 'A:Z')
   const consultRange = getEnv('CONSULT_SHEET_RANGE', 'A:Z')
+  const consultPartnerPrefix = getEnv('CONSULT_PARTNER_SHEET_PREFIX', '업체_')
 
   const spreadsheetId = payload.inquiry_type === 'policy_waitlist' ? waitlistSheetId : consultSheetId
   const range = payload.inquiry_type === 'policy_waitlist' ? waitlistRange : consultRange
+  const row = toRow(payload)
 
   if (!spreadsheetId) {
     throw new Error('spreadsheet id is missing')
   }
 
-  await sheets.spreadsheets.values.append({
+  await appendRows({
+    sheets,
     spreadsheetId,
     range,
-    valueInputOption: 'USER_ENTERED',
-    requestBody: {
-      values: [toRow(payload)],
-    },
+    values: row,
+  })
+
+  if (payload.inquiry_type !== 'consult') return
+
+  const partnerRaw = String(payload.formData.partner_name ?? payload.formData.partner_code ?? '').trim()
+  const partnerTitle = sanitizeSheetTitle(partnerRaw)
+
+  if (!partnerTitle) return
+
+  const finalTitle = sanitizeSheetTitle(`${consultPartnerPrefix}${partnerTitle}`) || partnerTitle
+  await ensureSheetExists({
+    sheets,
+    spreadsheetId,
+    title: finalTitle,
+    headers: getHeaders(payload.inquiry_type),
+  })
+  await appendRows({
+    sheets,
+    spreadsheetId,
+    range: toSheetRange(finalTitle),
+    values: row,
   })
 }
 

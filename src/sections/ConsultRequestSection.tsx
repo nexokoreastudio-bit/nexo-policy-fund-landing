@@ -123,6 +123,8 @@ function ConsultRequestSection() {
         support_type: supportType === 'normal' ? '일반지원대상(50%)' : '자부담완화 대상(60%)',
         message,
         agree,
+        entry_url: window.location.href,
+        referrer: document.referrer,
         ...utm,
       },
     }
