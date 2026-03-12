@@ -240,7 +240,10 @@ async function appendToSheet(payload: LeadPayload) {
 
   if (!partnerTitle) return
 
-  const finalTitle = sanitizeSheetTitle(`${consultPartnerPrefix}${partnerTitle}`) || partnerTitle
+  const finalTitle =
+    sanitizeSheetTitle(
+      partnerTitle.startsWith(consultPartnerPrefix) ? partnerTitle : `${consultPartnerPrefix}${partnerTitle}`,
+    ) || partnerTitle
   await ensureSheetExists({
     sheets,
     spreadsheetId,
