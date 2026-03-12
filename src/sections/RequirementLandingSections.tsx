@@ -206,7 +206,7 @@ const applicationOverviewSteps: Array<{
     detail: '전자계약, 자부담 납부, 보증보험 발급 서류 제출을 진행합니다.',
     compare: {
       leftLabel: '자부담완화 대상',
-      leftValue: '자부담 20%',
+      leftValue: '자부담 40%',
       rightLabel: '일반지원대상',
       rightValue: '자부담 50%',
     },
@@ -222,8 +222,8 @@ const applicationOverviewSteps: Array<{
     step: '05',
     title: '2년 의무사용',
     summary: '위치 변경 불가',
-    detail: '설치 후 2년 의무사용 기준을 준수해야 하며 임의 위치 변경은 불가합니다.',
-    note: '문의처 예시: 공단 문의 / 1600-6185',
+    detail: '설치 후 2년 의무사용 기준을 준수해야 하며 임의 위치 변경은 소상공인 진흥공단에 문의 해 주시기 바랍니다.',
+    note: '문의처: 소상공인 진흥공공단 1600-6185',
   },
 ] as const
 
@@ -276,6 +276,28 @@ function ProcessSliderSection() {
   return (
     <>
       <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+        <div className="mb-6 border border-[#bfd7f7] bg-[linear-gradient(180deg,#eef6ff_0%,#f8fbff_100%)] px-4 py-4 text-center shadow-[0_12px_24px_rgba(15,23,42,0.05)] sm:mb-8 sm:px-6 sm:py-5">
+          <p className="text-[1.2rem] font-black leading-8 text-[#d62828] sm:text-[2rem] sm:leading-[3rem]">
+            모든 서류가 준비 되셨으면 스마트상점 신청을 시작하겠습니다.
+          </p>
+          <div className="mt-4 flex items-center justify-center gap-3 sm:gap-5">
+            <span className="text-[2rem] font-black leading-none tracking-[-0.18em] text-[#ff3b30] sm:text-[3rem]">
+              &gt;&gt;&gt;
+            </span>
+            <a
+              href="https://www.sbiz.or.kr/smst/index.do"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center border border-[#21457e] bg-[#21457e] px-5 py-3 text-sm font-black text-white transition hover:bg-[#173a73] sm:text-base"
+            >
+              소상공인스마트상점 신청 바로가기
+            </a>
+            <span className="text-[2rem] font-black leading-none tracking-[-0.18em] text-[#ff3b30] sm:text-[3rem]">
+              &lt;&lt;&lt;
+            </span>
+          </div>
+        </div>
+
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
@@ -331,8 +353,7 @@ function ProcessSliderSection() {
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#2b63c7] text-3xl font-black text-white shadow-[0_10px_24px_rgba(43,99,199,0.25)]">
                     !
                   </div>
-                  <p className="mt-6 text-[1.3rem] font-black tracking-tight text-[#173a73] sm:text-[2.4rem]">현재 진행하는 사업공고가 없습니다.</p>
-                  <p className="mt-4 text-base font-bold text-slate-500 sm:text-xl">보다 나은 서비스 제공을 위해 준비중에 있습니다.</p>
+                  <p className="mt-6 text-[1.3rem] font-black tracking-tight text-[#173a73] sm:text-[2.4rem]">3월13일(금) 10시 신청접수 시작합니다.</p>
                 </div>
               </div>
             ) : (
@@ -771,6 +792,9 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
         </div>
       </section>
 
+      <ProcessSliderSection />
+      <ApplicationOverviewSection />
+
       <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
         <article>
           <h2 className="text-center text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">소상공인 선정평가 기준</h2>
@@ -832,9 +856,6 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
           </div>
         </article>
       </section>
-
-        <ProcessSliderSection />
-        <ApplicationOverviewSection />
       </div>
 
       {referenceOpen ? (
