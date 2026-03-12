@@ -8,9 +8,12 @@ type LeadPayload = {
 }
 
 const PARTNER_NAME_BY_CODE: Record<string, string> = {
+  nexo: 'NEXO',
   seonggongun: '성공운',
   edunplay: '애듀엔플레이(한국기업렌탈)',
   seonghyogyeong: '성효경',
+  parksuchang: '박수창',
+  gukminlife: '국민생활개선운동본부',
 }
 
 const CONSULT_MANAGER_SHEET_TITLE = '상담관리'
@@ -29,10 +32,13 @@ function resolvePartnerCode(payload: LeadPayload) {
 }
 
 function resolvePartnerName(payload: LeadPayload) {
+  const partnerCode = resolvePartnerCode(payload)
+  const mappedName = PARTNER_NAME_BY_CODE[partnerCode]
+  if (mappedName) return mappedName
+
   const rawName = String(payload.formData.partner_name ?? '').trim()
   if (rawName) return rawName
 
-  const partnerCode = resolvePartnerCode(payload)
   return PARTNER_NAME_BY_CODE[partnerCode] ?? (partnerCode || DIRECT_INBOUND_PARTNER_NAME)
 }
 
