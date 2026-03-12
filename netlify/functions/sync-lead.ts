@@ -7,12 +7,30 @@ type LeadPayload = {
   formData: Record<string, string | boolean>
 }
 
+const PARTNER_NAME_BY_CODE: Record<string, string> = {
+  seonggongun: '성공운',
+  edunplay: '애듀엔플레이(한국기업렌탈)',
+  seonghyogyeong: '성효경',
+}
+
 function getEnv(name: string, fallback = '') {
   return process.env[name] ?? fallback
 }
 
 function toInquiryLabel(type: LeadPayload['inquiry_type']) {
   return type === 'policy_waitlist' ? '공지 알림 신청' : '상담 신청'
+}
+
+function resolvePartnerCode(payload: LeadPayload) {
+  return String(payload.formData.partner_code ?? '').trim()
+}
+
+function resolvePartnerName(payload: LeadPayload) {
+  const rawName = String(payload.formData.partner_name ?? '').trim()
+  if (rawName) return rawName
+
+  const partnerCode = resolvePartnerCode(payload)
+  return PARTNER_NAME_BY_CODE[partnerCode] ?? partnerCode
 }
 
 function getHeaders(type: LeadPayload['inquiry_type']) {
@@ -66,9 +84,11 @@ function getHeaders(type: LeadPayload['inquiry_type']) {
 
 function toRow(payload: LeadPayload) {
   const base = [payload.created_at, toInquiryLabel(payload.inquiry_type)]
+  const partnerCode = resolvePartnerCode(payload)
+  const partnerName = resolvePartnerName(payload)
   const partner = [
-    String(payload.formData.partner_code ?? ''),
-    String(payload.formData.partner_name ?? ''),
+    partnerCode,
+    partnerName,
     String(payload.formData.entry_url ?? ''),
     String(payload.formData.referrer ?? ''),
   ]
@@ -235,7 +255,7 @@ async function appendToSheet(payload: LeadPayload) {
 
   if (payload.inquiry_type !== 'consult') return
 
-  const partnerRaw = String(payload.formData.partner_name ?? payload.formData.partner_code ?? '').trim()
+  const partnerRaw = resolvePartnerName(payload)
   const partnerTitle = sanitizeSheetTitle(partnerRaw)
 
   if (!partnerTitle) return
