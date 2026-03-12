@@ -13,6 +13,8 @@ const PARTNER_NAME_BY_CODE: Record<string, string> = {
   seonghyogyeong: '성효경',
 }
 
+const CONSULT_MANAGER_SHEET_TITLE = '상담관리'
+
 function getEnv(name: string, fallback = '') {
   return process.env[name] ?? fallback
 }
@@ -82,6 +84,27 @@ function getHeaders(type: LeadPayload['inquiry_type']) {
   ]
 }
 
+function getConsultManagerHeaders() {
+  return [
+    '접수일시',
+    '업체명',
+    '업체코드',
+    '상호',
+    '대표자 성명',
+    '대표자 연락처',
+    '지역',
+    '지원 유형',
+    '추가 문의 내용',
+    '상담 담당자',
+    '상담 상태',
+    '상담 시작',
+    '상담 완료',
+    '스마트상점 신청 여부',
+    '재확인 필요',
+    '상담 메모',
+  ]
+}
+
 function toRow(payload: LeadPayload) {
   const base = [payload.created_at, toInquiryLabel(payload.inquiry_type)]
   const partnerCode = resolvePartnerCode(payload)
@@ -130,6 +153,29 @@ function toRow(payload: LeadPayload) {
     String(payload.formData.agree ?? ''),
     ...partner,
     ...utm,
+  ]
+}
+
+function toConsultManagerRow(payload: LeadPayload) {
+  if (payload.inquiry_type !== 'consult') return null
+
+  return [
+    payload.created_at,
+    resolvePartnerName(payload),
+    resolvePartnerCode(payload),
+    String(payload.formData.businessName ?? ''),
+    String(payload.formData.name ?? ''),
+    String(payload.formData.phone ?? ''),
+    String(payload.formData.region ?? ''),
+    String(payload.formData.support_type ?? ''),
+    String(payload.formData.message ?? ''),
+    '',
+    '미진행',
+    false,
+    false,
+    '미확인',
+    false,
+    '',
   ]
 }
 
@@ -254,6 +300,23 @@ async function appendToSheet(payload: LeadPayload) {
   })
 
   if (payload.inquiry_type !== 'consult') return
+
+  await ensureSheetExists({
+    sheets,
+    spreadsheetId,
+    title: CONSULT_MANAGER_SHEET_TITLE,
+    headers: getConsultManagerHeaders(),
+  })
+
+  const consultManagerRow = toConsultManagerRow(payload)
+  if (consultManagerRow) {
+    await appendRows({
+      sheets,
+      spreadsheetId,
+      range: toSheetRange(CONSULT_MANAGER_SHEET_TITLE),
+      values: consultManagerRow,
+    })
+  }
 
   const partnerRaw = resolvePartnerName(payload)
   const partnerTitle = sanitizeSheetTitle(partnerRaw)
