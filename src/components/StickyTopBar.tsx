@@ -19,12 +19,6 @@ function StickyTopBar({ policyOpen, onOpenConsult }: StickyTopBarProps) {
           <a href={supportHref} className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
             지원금 확인
           </a>
-          <a href="/certificate-guide" className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
-            확인서 발급
-          </a>
-          <a href="/smartstore-apply" className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
-            사업 신청
-          </a>
           <button
             type="button"
             onClick={onOpenConsult}
