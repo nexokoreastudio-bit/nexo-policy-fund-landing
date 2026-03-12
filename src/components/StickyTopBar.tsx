@@ -13,7 +13,10 @@ function StickyTopBar({ policyOpen, onOpenConsult }: StickyTopBarProps) {
           <div className="hidden items-center gap-2 sm:flex">
             <img src="/assets/landing/nexo_logo_black.png" alt="넥소 블랙 로고" className="h-7 w-auto object-contain" />
           </div>
-          <span className="text-base font-black tracking-tight sm:text-lg">넥소 스마트상점 지원사업</span>
+          <span className="text-sm font-black tracking-tight sm:text-lg">
+            <span className="sm:hidden">넥소 스마트상점</span>
+            <span className="hidden sm:inline">넥소 스마트상점 지원사업</span>
+          </span>
         </a>
         <nav className="hidden items-center gap-2 sm:flex">
           <a href={supportHref} className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">

@@ -150,7 +150,10 @@ function ConsultRequestSection() {
   }
 
   return (
-    <section id="consult-form" className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+    <section
+      id="consult-form"
+      className="scroll-mt-24 border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8"
+    >
       <div className="text-center">
         <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
           상담 신청
@@ -284,7 +287,7 @@ function ConsultRequestSection() {
           </div>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-[1fr_18rem]">
+        <div className="grid gap-4 md:grid-cols-[1fr_18rem] md:gap-5">
           <label className="grid gap-2">
             <span className="text-sm font-black text-[#21457e]">상세 주소 (선택)</span>
             <input

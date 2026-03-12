@@ -331,7 +331,7 @@ function ProcessSliderSection() {
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#2b63c7] text-3xl font-black text-white shadow-[0_10px_24px_rgba(43,99,199,0.25)]">
                     !
                   </div>
-                  <p className="mt-6 text-[1.55rem] font-black tracking-tight text-[#173a73] sm:text-[2.4rem]">현재 진행하는 사업공고가 없습니다.</p>
+                  <p className="mt-6 text-[1.3rem] font-black tracking-tight text-[#173a73] sm:text-[2.4rem]">현재 진행하는 사업공고가 없습니다.</p>
                   <p className="mt-4 text-base font-bold text-slate-500 sm:text-xl">보다 나은 서비스 제공을 위해 준비중에 있습니다.</p>
                 </div>
               </div>
@@ -433,7 +433,7 @@ function ApplicationOverviewSection() {
         </p>
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-6 xl:gap-5">
         {applicationOverviewSteps.map((item, index) => (
           <article
             key={item.step}
@@ -441,7 +441,7 @@ function ApplicationOverviewSection() {
               item.current
                 ? 'border-[#ffd76a] bg-[linear-gradient(180deg,#fffef1_0%,#fff6cf_100%)] shadow-[0_18px_34px_rgba(196,145,0,0.12)]'
                 : 'border-[#dbe6f3] bg-white'
-            }`}
+            } ${index < 3 ? 'xl:col-span-2' : 'xl:col-span-3'}`}
           >
             <div className="flex items-center justify-between">
               <span
@@ -512,7 +512,7 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
           </span>
           <div className="mt-4 border-2 border-[#c5d3e6] bg-white p-4 shadow-[0_14px_32px_rgba(15,23,42,0.05)] sm:p-8">
             <div className="border border-[#dbe6f3] bg-[#fbfcff] p-4 sm:p-6">
-              <p className="text-[1.9rem] font-black leading-tight tracking-tight text-slate-950 sm:text-[2.35rem]">
+              <p className="text-[1.5rem] font-black leading-tight tracking-tight text-slate-950 sm:text-[2.35rem]">
                 2026년 스마트상점 기술보급사업 참여 소상공인 모집공고
               </p>
 
@@ -568,7 +568,7 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
                   <p className="text-sm font-black tracking-[0.08em] text-[#b42318] sm:text-base">
                     소상공인 부합 여부 확인 조건
                   </p>
-                  <p className="mt-2 text-[1.2rem] font-black leading-tight tracking-tight text-[#e03131] sm:text-[1.9rem] sm:leading-[2.7rem]">
+                  <p className="mt-2 text-[1.05rem] font-black leading-tight tracking-tight text-[#e03131] sm:text-[1.9rem] sm:leading-[2.7rem]">
                     교육/서비스업, 5인미만(4대보험가입자), 15억이하(연매출)
                   </p>
                 </div>
@@ -701,7 +701,7 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
             {specItems.map((item) => (
               <div
                 key={item.id}

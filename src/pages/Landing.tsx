@@ -33,7 +33,7 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
       {previewBanner ? (
         <div className="bg-slate-100 px-4 py-2 text-center text-xs font-bold text-slate-700 sm:text-sm">{previewBanner}</div>
       ) : null}
-      <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6 sm:px-6 sm:pb-16 lg:px-8">
         <Hero config={config} onOpenConsult={() => undefined} />
         <RequirementLandingSections config={config} policyData={policyData} />
         <div className="mt-8">
