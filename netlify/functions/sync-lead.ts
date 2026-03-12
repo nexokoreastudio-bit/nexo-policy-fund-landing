@@ -93,6 +93,8 @@ function getConsultManagerHeaders() {
     '상호',
     '대표자 성명',
     '대표자 연락처',
+    '담당자 성명',
+    '담당자 연락처',
     '지역',
     '지원 유형',
     '추가 문의 내용',
@@ -167,6 +169,8 @@ function toConsultManagerRow(payload: LeadPayload) {
     String(payload.formData.businessName ?? ''),
     String(payload.formData.name ?? ''),
     String(payload.formData.phone ?? ''),
+    String(payload.formData.manager_name ?? ''),
+    String(payload.formData.manager_phone ?? ''),
     String(payload.formData.region ?? ''),
     String(payload.formData.support_type ?? ''),
     String(payload.formData.message ?? ''),
@@ -298,8 +302,8 @@ async function setupConsultManagerRow(params: {
               sheetId,
               startRowIndex: rowIndex,
               endRowIndex: rowIndex + 1,
-              startColumnIndex: 9,
-              endColumnIndex: 10,
+              startColumnIndex: 11,
+              endColumnIndex: 12,
             },
             rule: {
               condition: {
@@ -317,8 +321,8 @@ async function setupConsultManagerRow(params: {
               sheetId,
               startRowIndex: rowIndex,
               endRowIndex: rowIndex + 1,
-              startColumnIndex: 10,
-              endColumnIndex: 11,
+              startColumnIndex: 12,
+              endColumnIndex: 13,
             },
             rule: {
               condition: {
@@ -336,8 +340,8 @@ async function setupConsultManagerRow(params: {
               sheetId,
               startRowIndex: rowIndex,
               endRowIndex: rowIndex + 1,
-              startColumnIndex: 13,
-              endColumnIndex: 14,
+              startColumnIndex: 15,
+              endColumnIndex: 16,
             },
             rule: {
               condition: {
@@ -360,24 +364,8 @@ async function setupConsultManagerRow(params: {
               sheetId,
               startRowIndex: rowIndex,
               endRowIndex: rowIndex + 1,
-              startColumnIndex: 11,
-              endColumnIndex: 12,
-            },
-            rule: {
-              condition: { type: 'BOOLEAN' },
-              strict: true,
-              showCustomUi: true,
-            },
-          },
-        },
-        {
-          setDataValidation: {
-            range: {
-              sheetId,
-              startRowIndex: rowIndex,
-              endRowIndex: rowIndex + 1,
-              startColumnIndex: 12,
-              endColumnIndex: 13,
+              startColumnIndex: 13,
+              endColumnIndex: 14,
             },
             rule: {
               condition: { type: 'BOOLEAN' },
@@ -394,6 +382,22 @@ async function setupConsultManagerRow(params: {
               endRowIndex: rowIndex + 1,
               startColumnIndex: 14,
               endColumnIndex: 15,
+            },
+            rule: {
+              condition: { type: 'BOOLEAN' },
+              strict: true,
+              showCustomUi: true,
+            },
+          },
+        },
+        {
+          setDataValidation: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 16,
+              endColumnIndex: 17,
             },
             rule: {
               condition: { type: 'BOOLEAN' },
