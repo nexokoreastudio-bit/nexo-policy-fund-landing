@@ -4,37 +4,15 @@ import LeadModal from '../components/LeadModal'
 import Toast from '../components/Toast'
 import FloatingMobileCTA from '../components/FloatingMobileCTA'
 import StepProgressBar from '../components/StepProgressBar'
+import GuidedStepViewer from '../components/GuidedStepViewer'
 import Footer from '../sections/Footer'
 import Hero from '../sections/Hero'
 import { getClientConfig } from '../lib/config'
 import ImageSlotPlaceholder from '../components/ImageSlotPlaceholder'
 import { imageSlots } from '../constants/imageSlots'
+import { smartStoreApplySteps } from '../constants/guidedSteps'
 
-const applyFlow = ['자격 확인', '스마트상점 접속', '전자칠판 선택', '신청서 작성', '제출 및 결과 확인']
-
-const guideBlocks = [
-  {
-    step: 'STEP 1',
-    title: '어디서 시작하는지',
-    description: '스마트상점 사이트에 접속한 뒤 대표자 명의로 로그인하고 일반형 공고에서 신청을 시작합니다.',
-    checklist: ['스마트상점 홈페이지 진입', '대표자 명의 회원가입 또는 로그인', '일반형 공고 선택'],
-    slotLabel: '시작 화면 캡처',
-  },
-  {
-    step: 'STEP 2',
-    title: '어떤 메뉴를 클릭하는지',
-    description: '일반형 공고에서 전자칠판 제품을 선택하고 희망 도입 순위를 입력하는 단계입니다.',
-    checklist: ['전자칠판 항목 선택', '넥소 모델 확인', '희망 도입 순위 선택'],
-    slotLabel: '기술 선택 캡처',
-  },
-  {
-    step: 'STEP 3',
-    title: '신청서를 어떻게 작성하는지',
-    description: '업체소개, 지원동기, 활용계획을 입력하고 최종제출 버튼으로 신청을 완료하는 단계입니다.',
-    checklist: ['업체소개 입력', '지원동기 입력', '활용계획 입력 후 최종제출'],
-    slotLabel: '신청서 작성 캡처',
-  },
-] as const
+const applyFlow = ['자격 확인', '사이트 접속', '기술 선택', '신청서 작성', '제출 후 확인']
 
 const cautionImage = {
   src: '/assets/extracted/incheon-20250521/image11.png',
@@ -84,7 +62,17 @@ function SmartStoreApply() {
         </section>
 
         <section id="progress-check" className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
-          <h2 className="text-2xl font-black text-white">신청 전에 먼저 확인할 것</h2>
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h2 className="text-2xl font-black text-white">신청 전에 먼저 확인할 것</h2>
+              <p className="mt-2 max-w-3xl text-sm text-slate-300">
+                아래 단계 뷰어에서는 화면 한 장과 해야 할 일만 집중해서 볼 수 있습니다. 복잡한 긴 설명 대신 신청 흐름을 순서대로 따라가면 됩니다.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-[#2e5fb4] bg-[rgba(121,240,255,0.08)] px-4 py-3 text-sm font-semibold text-[#79f0ff]">
+              데스크톱은 좌우 보기, 모바일은 위아래 보기로 자동 전환
+            </div>
+          </div>
           <div className="mt-4 grid gap-3 lg:grid-cols-3">
             <div className="rounded-[1.5rem] border border-[#284f95] bg-[linear-gradient(180deg,rgba(13,29,69,0.95)_0%,rgba(7,17,41,0.95)_100%)] p-5">
               <p className="text-sm font-bold text-white">1. 어디서 시작하는지</p>
@@ -101,73 +89,8 @@ function SmartStoreApply() {
           </div>
         </section>
 
-        <section className="mt-6 grid gap-5">
-          {guideBlocks.map((block) => (
-            <article
-              key={block.step}
-              className="rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8"
-            >
-              <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#79f0ff]">{block.step}</p>
-                  <h2 className="mt-2 text-2xl font-black text-white">{block.title}</h2>
-                  <p className="mt-3 text-sm text-slate-300">{block.description}</p>
-                  <ul className="mt-5 grid gap-2 text-sm text-slate-200">
-                    {block.checklist.map((item) => (
-                      <li key={item} className="rounded-xl border border-[#284f95] bg-[rgba(121,240,255,0.08)] px-4 py-3 font-semibold">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <ImageSlotPlaceholder
-                  label={
-                    block.step === 'STEP 1'
-                      ? imageSlots.applyGuide.start.label
-                      : block.step === 'STEP 2'
-                        ? imageSlots.applyGuide.menu.label
-                        : imageSlots.applyGuide.upload.label
-                  }
-                  src={
-                    block.step === 'STEP 1'
-                      ? imageSlots.applyGuide.start.src
-                      : block.step === 'STEP 2'
-                        ? imageSlots.applyGuide.menu.src
-                        : imageSlots.applyGuide.upload.src
-                  }
-                  alt={
-                    block.step === 'STEP 1'
-                      ? imageSlots.applyGuide.start.alt
-                      : block.step === 'STEP 2'
-                        ? imageSlots.applyGuide.menu.alt
-                        : imageSlots.applyGuide.upload.alt
-                  }
-                  note={
-                    block.step === 'STEP 1'
-                      ? imageSlots.applyGuide.start.note
-                      : block.step === 'STEP 2'
-                        ? imageSlots.applyGuide.menu.note
-                        : imageSlots.applyGuide.upload.note
-                  }
-                  plannedSrc={
-                    block.step === 'STEP 1'
-                      ? imageSlots.applyGuide.start.plannedSrc
-                      : block.step === 'STEP 2'
-                        ? imageSlots.applyGuide.menu.plannedSrc
-                        : imageSlots.applyGuide.upload.plannedSrc
-                  }
-                  sourceRef={
-                    block.step === 'STEP 1'
-                      ? imageSlots.applyGuide.start.sourceRef
-                      : block.step === 'STEP 2'
-                        ? imageSlots.applyGuide.menu.sourceRef
-                        : imageSlots.applyGuide.upload.sourceRef
-                  }
-                  minHeightClassName="min-h-80 xl:min-h-[28rem]"
-                />
-              </div>
-            </article>
-          ))}
+        <section className="mt-6">
+          <GuidedStepViewer steps={smartStoreApplySteps} ariaLabel="스마트상점 신청 단계별 안내" />
         </section>
 
         <section className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
@@ -187,6 +110,38 @@ function SmartStoreApply() {
               ))}
             </div>
           </div>
+        </section>
+
+        <section className="mt-6 grid gap-5 lg:grid-cols-2">
+          <article className="rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
+            <h2 className="text-2xl font-black text-white">신청 전에 준비하면 좋은 것</h2>
+            <div className="mt-4 grid gap-3">
+              <p className="rounded-2xl border border-[#284f95] bg-[rgba(121,240,255,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                대표자 본인 계정과 로그인 정보
+              </p>
+              <p className="rounded-2xl border border-[#284f95] bg-[rgba(121,240,255,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                업체소개, 지원동기, 활용계획 문안
+              </p>
+              <p className="rounded-2xl border border-[#284f95] bg-[rgba(121,240,255,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                매장 사진, 우대지원 증빙 등 첨부 서류
+              </p>
+            </div>
+          </article>
+
+          <article className="rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">
+            <h2 className="text-2xl font-black text-white">이 흐름으로 보면 쉬운 이유</h2>
+            <div className="mt-4 grid gap-3">
+              <p className="rounded-2xl border border-[#4e3c85] bg-[rgba(255,139,245,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                어디서 시작하는지 바로 보입니다.
+              </p>
+              <p className="rounded-2xl border border-[#4e3c85] bg-[rgba(255,139,245,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                현재 단계에서 눌러야 할 메뉴와 준비물을 한 번에 확인할 수 있습니다.
+              </p>
+              <p className="rounded-2xl border border-[#4e3c85] bg-[rgba(255,139,245,0.08)] px-4 py-4 text-sm font-semibold text-slate-100">
+                다음 단계가 명확해서 긴 스크롤 설명보다 덜 복잡합니다.
+              </p>
+            </div>
+          </article>
         </section>
 
         <section className="mt-6 rounded-[2rem] border border-[#4b71c6] bg-[linear-gradient(135deg,rgba(18,34,78,0.98)_0%,rgba(22,42,96,0.95)_100%)] p-6 text-white shadow-[0_20px_60px_rgba(4,10,30,0.38)] ring-1 ring-white/5 sm:p-8">

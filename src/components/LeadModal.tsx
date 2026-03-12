@@ -52,6 +52,8 @@ function LeadModal({ open, mode, onClose, onSuccess }: LeadModalProps) {
             interestInch,
             tag: 'policy_waitlist',
             agree,
+            entry_url: window.location.href,
+            referrer: document.referrer,
             ...utm,
           }
         : {
@@ -62,6 +64,8 @@ function LeadModal({ open, mode, onClose, onSuccess }: LeadModalProps) {
             support_type: supportType === 'normal' ? '일반 소상공인(50%)' : '우대지원 대상(60%)',
             message,
             agree,
+            entry_url: window.location.href,
+            referrer: document.referrer,
             ...utm,
           },
     }
@@ -129,6 +133,13 @@ function LeadModal({ open, mode, onClose, onSuccess }: LeadModalProps) {
           <div className="sm:col-span-2 rounded-xl border border-dashed border-slate-300 bg-slate-50 px-3 py-2 text-xs text-slate-500">
             유입 추적: {utm.utm_source ?? '-'} / {utm.utm_medium ?? '-'} / {utm.utm_campaign ?? '-'} / {utm.utm_content ?? '-'}
           </div>
+
+          {utm.partner_name || utm.partner_code ? (
+            <div className="sm:col-span-2 rounded-xl border border-dashed border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">
+              업체 구분: {utm.partner_name ?? utm.partner_code}
+              {utm.partner_name && utm.partner_code ? ` (${utm.partner_code})` : ''}
+            </div>
+          ) : null}
 
           <label className="sm:col-span-2 flex items-center gap-2 text-sm text-slate-700">
             <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} required />
