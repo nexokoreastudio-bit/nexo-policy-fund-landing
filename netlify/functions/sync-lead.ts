@@ -14,6 +14,7 @@ const PARTNER_NAME_BY_CODE: Record<string, string> = {
 }
 
 const CONSULT_MANAGER_SHEET_TITLE = '상담관리'
+const DIRECT_INBOUND_PARTNER_NAME = '직접유입'
 
 function getEnv(name: string, fallback = '') {
   return process.env[name] ?? fallback
@@ -32,7 +33,7 @@ function resolvePartnerName(payload: LeadPayload) {
   if (rawName) return rawName
 
   const partnerCode = resolvePartnerCode(payload)
-  return PARTNER_NAME_BY_CODE[partnerCode] ?? partnerCode
+  return PARTNER_NAME_BY_CODE[partnerCode] ?? (partnerCode || DIRECT_INBOUND_PARTNER_NAME)
 }
 
 function getHeaders(type: LeadPayload['inquiry_type']) {
