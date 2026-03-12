@@ -150,18 +150,18 @@ function ConsultRequestSection() {
   }
 
   return (
-    <section id="consult-form" className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+    <section id="consult-form" className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
       <div className="text-center">
-        <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-4 py-2 text-sm font-black tracking-[0.14em] text-[#21457e] sm:text-base">
+        <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
           상담 신청
         </span>
-        <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">신청 전 궁금한 점이 있으면 상담 신청을 남겨주세요</h2>
-        <p className="mt-3 text-base font-semibold leading-7 text-slate-600 sm:text-lg">
+        <h2 className="mt-4 text-2xl font-black leading-tight tracking-tight text-slate-950 sm:text-4xl">신청 전 궁금한 점이 있으면 상담 신청을 남겨주세요</h2>
+        <p className="mt-3 text-sm font-semibold leading-7 text-slate-600 sm:text-lg">
           준비서류, 신청 자격, 설치 일정, 자부담 관련 문의를 순차적으로 안내해드립니다.
         </p>
       </div>
 
-      <form className="mx-auto mt-8 max-w-5xl space-y-5" onSubmit={handleSubmit}>
+      <form className="mx-auto mt-6 max-w-5xl space-y-4 sm:mt-8 sm:space-y-5" onSubmit={handleSubmit}>
         <div className="grid gap-5 md:grid-cols-2">
           <label className="grid gap-2">
             <span className="text-sm font-black text-[#21457e]">상호 (필수)</span>
@@ -176,7 +176,7 @@ function ConsultRequestSection() {
         </div>
 
         <div className="grid gap-5 md:grid-cols-2">
-          <div className="space-y-5 border border-[#dbe6f3] bg-white p-5">
+          <div className="space-y-4 border border-[#dbe6f3] bg-white p-4 sm:space-y-5 sm:p-5">
             <p className="text-lg font-black text-slate-950">대표자 정보</p>
 
             <label className="grid gap-2">
@@ -202,8 +202,8 @@ function ConsultRequestSection() {
             </label>
           </div>
 
-          <div className="space-y-5 border border-[#dbe6f3] bg-white p-5">
-            <div className="flex items-center justify-between gap-3">
+          <div className="space-y-4 border border-[#dbe6f3] bg-white p-4 sm:space-y-5 sm:p-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-lg font-black text-slate-950">담당자 정보</p>
               <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
                 <input
@@ -262,7 +262,7 @@ function ConsultRequestSection() {
           </label>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-[1fr_auto]">
+        <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
           <label className="grid gap-2">
             <span className="text-sm font-black text-[#21457e]">주소 (선택)</span>
             <input
@@ -272,12 +272,12 @@ function ConsultRequestSection() {
               placeholder="주소 검색 버튼으로 주소를 입력해 주세요"
             />
           </label>
-          <div className="grid gap-2 md:self-end">
-            <span className="text-sm font-black text-transparent">주소 검색</span>
+          <div className="grid gap-2">
+            <span className="hidden text-sm font-black text-transparent md:block">주소 검색</span>
             <button
               type="button"
               onClick={openAddressSearch}
-              className="border border-[#21457e] bg-[#21457e] px-5 py-3 text-base font-black text-white transition hover:bg-[#183766]"
+              className="w-full border border-[#21457e] bg-[#21457e] px-5 py-3 text-base font-black text-white transition hover:bg-[#183766] md:w-auto"
             >
               주소 검색
             </button>
@@ -336,7 +336,7 @@ function ConsultRequestSection() {
           <button
             type="submit"
             disabled={loading}
-            className="min-w-[16rem] border border-[#21457e] bg-[#21457e] px-6 py-4 text-lg font-black text-white transition hover:bg-[#183766] disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full border border-[#21457e] bg-[#21457e] px-6 py-4 text-lg font-black text-white transition hover:bg-[#183766] disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-[16rem] sm:w-auto"
           >
             {loading ? '전송 중...' : '상담신청 보내기'}
           </button>

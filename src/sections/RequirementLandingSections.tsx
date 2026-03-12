@@ -275,15 +275,17 @@ function ProcessSliderSection() {
 
   return (
     <>
-      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-4 py-2 text-sm font-black tracking-[0.14em] text-[#21457e] sm:text-base">
+            <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
               신청 절차
             </span>
-            <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">화면을 보면서 단계별로 그대로 따라가면 됩니다.</h2>
+            <h2 className="mt-4 text-2xl font-black leading-tight tracking-tight text-slate-950 sm:text-4xl">
+              화면을 보면서 단계별로 그대로 따라가면 됩니다.
+            </h2>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
             {visibleTracks.map((track, index) => {
               const isActive = index === safeTrackIndex
               return (
@@ -291,7 +293,7 @@ function ProcessSliderSection() {
                   key={track.id}
                   type="button"
                   onClick={() => setTrackIndex(index)}
-                  className={`px-4 py-3 text-sm font-black transition ${
+                  className={`w-full px-4 py-3 text-sm font-black transition sm:w-auto ${
                     isActive ? 'bg-[#21457e] text-white' : 'border border-[#cfdbec] bg-white text-[#21457e]'
                   }`}
                 >
@@ -302,7 +304,7 @@ function ProcessSliderSection() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[0.88fr_1.12fr]">
+        <div className="mt-6 grid gap-5 lg:grid-cols-[0.88fr_1.12fr]">
           <div className="space-y-3">
             {currentTrack.steps.map((step, index) => {
               const isActive = index === currentStepIndex
@@ -311,7 +313,7 @@ function ProcessSliderSection() {
                   key={step.id}
                   type="button"
                   onClick={() => updateStepIndex(index)}
-                  className={`block w-full border px-4 py-4 text-left shadow-[0_12px_24px_rgba(15,23,42,0.04)] transition ${
+                  className={`block w-full border px-4 py-3 text-left shadow-[0_12px_24px_rgba(15,23,42,0.04)] transition sm:px-5 sm:py-4 ${
                     isActive ? 'border-[#7aa7e6] bg-[#eef5ff]' : 'border-[#dbe6f3] bg-white'
                   }`}
                 >
@@ -325,12 +327,12 @@ function ProcessSliderSection() {
           <div className="space-y-4">
             {isNoAnnouncementPreview ? (
               <div className="block w-full border border-[#dbe6f3] bg-white p-6 text-left shadow-[0_12px_24px_rgba(15,23,42,0.04)]">
-                <div className="flex min-h-[24rem] flex-col items-center justify-center border border-[#e7edf5] bg-[linear-gradient(180deg,#ffffff_0%,#f7faff_100%)] px-6 py-10 text-center">
+                <div className="flex min-h-[18rem] flex-col items-center justify-center border border-[#e7edf5] bg-[linear-gradient(180deg,#ffffff_0%,#f7faff_100%)] px-5 py-8 text-center sm:min-h-[24rem] sm:px-6 sm:py-10">
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#2b63c7] text-3xl font-black text-white shadow-[0_10px_24px_rgba(43,99,199,0.25)]">
                     !
                   </div>
-                  <p className="mt-6 text-[2rem] font-black tracking-tight text-[#173a73] sm:text-[2.4rem]">현재 진행하는 사업공고가 없습니다.</p>
-                  <p className="mt-4 text-lg font-bold text-slate-500 sm:text-xl">보다 나은 서비스 제공을 위해 준비중에 있습니다.</p>
+                  <p className="mt-6 text-[1.55rem] font-black tracking-tight text-[#173a73] sm:text-[2.4rem]">현재 진행하는 사업공고가 없습니다.</p>
+                  <p className="mt-4 text-base font-bold text-slate-500 sm:text-xl">보다 나은 서비스 제공을 위해 준비중에 있습니다.</p>
                 </div>
               </div>
             ) : (
@@ -370,7 +372,7 @@ function ProcessSliderSection() {
               </div>
 
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex gap-2">
+                <div className="grid gap-2 sm:flex">
                   <button
                     type="button"
                     onClick={() => updateStepIndex(Math.max(currentStepIndex - 1, 0))}
@@ -420,18 +422,18 @@ function ProcessSliderSection() {
 
 function ApplicationOverviewSection() {
   return (
-    <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
-      <div className="text-center">
-        <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-4 py-2 text-sm font-black tracking-[0.14em] text-[#21457e] sm:text-base">
+      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+        <div className="text-center">
+        <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
           진행 흐름
         </span>
-        <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">신청부터 선정, 설치까지 한눈에 보는 진행 절차</h2>
-        <p className="mt-3 text-base font-semibold leading-7 text-slate-600 sm:text-lg">
+        <h2 className="mt-4 text-2xl font-black leading-tight tracking-tight text-slate-950 sm:text-4xl">신청부터 선정, 설치까지 한눈에 보는 진행 절차</h2>
+        <p className="mt-3 text-sm font-semibold leading-7 text-slate-600 sm:text-lg">
           소상공인이 실제로 거치게 되는 핵심 단계만 추려서 쉽게 정리했습니다.
         </p>
       </div>
 
-      <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-6">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {applicationOverviewSteps.map((item, index) => (
           <article
             key={item.step}
@@ -439,7 +441,7 @@ function ApplicationOverviewSection() {
               item.current
                 ? 'border-[#ffd76a] bg-[linear-gradient(180deg,#fffef1_0%,#fff6cf_100%)] shadow-[0_18px_34px_rgba(196,145,0,0.12)]'
                 : 'border-[#dbe6f3] bg-white'
-            } ${index < 3 ? 'xl:col-span-2' : 'xl:col-span-3'}`}
+            }`}
           >
             <div className="flex items-center justify-between">
               <span
@@ -456,12 +458,12 @@ function ApplicationOverviewSection() {
             {item.current ? (
               <p className="mt-4 text-xs font-black tracking-[0.14em] text-[#9c6500]">현재 진행 단계</p>
             ) : null}
-            <h3 className="mt-5 text-[1.45rem] font-black leading-tight text-slate-950">{item.title}</h3>
-            <p className="mt-3 text-lg font-black text-[#21457e]">{item.summary}</p>
+            <h3 className="mt-5 text-[1.3rem] font-black leading-tight text-slate-950 sm:text-[1.45rem]">{item.title}</h3>
+            <p className="mt-3 text-base font-black text-[#21457e] sm:text-lg">{item.summary}</p>
             <p className="mt-4 text-sm font-semibold leading-7 text-slate-700 sm:text-base">{item.detail}</p>
             <div className="mt-5 border-t border-[#e7edf5] pt-4 text-sm font-bold leading-6 text-slate-600">
               {item.compare ? (
-                <div className="grid gap-3 grid-cols-2">
+                <div className="grid grid-cols-2 gap-3">
                   <div className="border border-[#ffe0a6] bg-[linear-gradient(180deg,#fffaf0_0%,#fff3d9_100%)] px-3 py-3 text-center">
                     <p className="text-xs font-black tracking-[0.08em] text-[#9c6500]">{item.compare.leftLabel}</p>
                     <p className="mt-1 text-lg font-black text-slate-950">{item.compare.leftValue}</p>
@@ -502,29 +504,29 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
 
   return (
     <>
-      <div className="mt-8 space-y-8">
-      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+      <div className="mt-6 space-y-6 sm:mt-8 sm:space-y-8">
+      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
         <div>
-          <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-4 py-2 text-sm font-black tracking-[0.14em] text-[#21457e] sm:text-base">
+          <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
             모집 안내
           </span>
-          <div className="mt-4 border-2 border-[#c5d3e6] bg-white p-6 shadow-[0_14px_32px_rgba(15,23,42,0.05)] sm:p-8">
-            <div className="border border-[#dbe6f3] bg-[#fbfcff] p-5 sm:p-6">
+          <div className="mt-4 border-2 border-[#c5d3e6] bg-white p-4 shadow-[0_14px_32px_rgba(15,23,42,0.05)] sm:p-8">
+            <div className="border border-[#dbe6f3] bg-[#fbfcff] p-4 sm:p-6">
               <p className="text-[1.9rem] font-black leading-tight tracking-tight text-slate-950 sm:text-[2.35rem]">
                 2026년 스마트상점 기술보급사업 참여 소상공인 모집공고
               </p>
 
-              <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:items-stretch">
-                <article className="min-h-[13rem] border border-[#8e5cff] bg-white px-5 py-4 sm:px-6 sm:py-5">
-                  <p className="text-[1.3rem] font-black tracking-[0.08em] text-[#21457e] sm:text-[1.55rem]">목적</p>
-                  <p className="mt-4 text-lg font-semibold leading-10 text-slate-800 sm:text-[1.45rem] sm:leading-[3rem]">
+              <div className="mt-6 grid gap-4 lg:grid-cols-2 lg:items-stretch">
+                <article className="min-h-[11rem] border border-[#8e5cff] bg-white px-4 py-4 sm:px-6 sm:py-5">
+                  <p className="text-[1.05rem] font-black tracking-[0.08em] text-[#21457e] sm:text-[1.55rem]">목적</p>
+                  <p className="mt-4 text-base font-semibold leading-8 text-slate-800 sm:text-[1.45rem] sm:leading-[3rem]">
                     (목적) 소비•유통환경의 비대면•디지털화에 따라 <span className="font-black text-[#d62828]">소상공인</span> 사업장에 스마트기술 도입 지원을 통해 <span className="font-black text-[#d62828]">소상공인</span>의 경쟁력 제고
                   </p>
                 </article>
 
-                <article className="min-h-[13rem] border border-[#8e5cff] bg-white px-5 py-4 sm:px-6 sm:py-5">
-                  <p className="text-[1.3rem] font-black tracking-[0.08em] text-[#21457e] sm:text-[1.55rem]">지원대상</p>
-                  <p className="mt-4 text-lg font-semibold leading-10 tracking-tight text-slate-800 sm:text-[1.45rem] sm:leading-[3rem]">
+                <article className="min-h-[11rem] border border-[#8e5cff] bg-white px-4 py-4 sm:px-6 sm:py-5">
+                  <p className="text-[1.05rem] font-black tracking-[0.08em] text-[#21457e] sm:text-[1.55rem]">지원대상</p>
+                  <p className="mt-4 text-base font-semibold leading-8 tracking-tight text-slate-800 sm:text-[1.45rem] sm:leading-[3rem]">
                     (지원대상) 「<span className="font-black text-[#1e63d6]">소상공인</span>기본법』 제2조에 따른
                     <br />
                     <span className="font-black text-[#1e63d6]">소상공인</span>으로, 신청일 현재 정상적으로 영업 중인 점포
@@ -548,13 +550,13 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
 
               <div className="mt-8 border-t border-[#e5ebf3] pt-6">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                  <p className="text-[1.2rem] font-black leading-8 text-[#e03131] sm:text-[1.45rem]">
+                  <p className="text-[1rem] font-black leading-8 text-[#e03131] sm:text-[1.45rem]">
                     ※ 소상공인기준:
                   </p>
                   <button
                     type="button"
                     onClick={() => setReferenceOpen(true)}
-                    className="inline-flex items-center justify-center border border-[#b9cbe6] bg-[linear-gradient(180deg,#f8fbff_0%,#e9f1fb_100%)] px-5 py-3 text-lg font-black text-[#21457e] shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition hover:border-[#7aa7e6] hover:bg-[#f3f8ff]"
+                    className="inline-flex items-center justify-center border border-[#b9cbe6] bg-[linear-gradient(180deg,#f8fbff_0%,#e9f1fb_100%)] px-4 py-3 text-base font-black text-[#21457e] shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition hover:border-[#7aa7e6] hover:bg-[#f3f8ff] sm:px-5 sm:text-lg"
                   >
                     소상공인 확인 기준표 보기
                   </button>
@@ -566,34 +568,34 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
                   <p className="text-sm font-black tracking-[0.08em] text-[#b42318] sm:text-base">
                     소상공인 부합 여부 확인 조건
                   </p>
-                  <p className="mt-2 text-[1.45rem] font-black leading-tight tracking-tight text-[#e03131] sm:text-[1.9rem] sm:leading-[2.7rem]">
+                  <p className="mt-2 text-[1.2rem] font-black leading-tight tracking-tight text-[#e03131] sm:text-[1.9rem] sm:leading-[2.7rem]">
                     교육/서비스업, 5인미만(4대보험가입자), 15억이하(연매출)
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 border border-[#cfdbec] bg-[linear-gradient(180deg,#fcfdff_0%,#f5f8fc_100%)] p-6 shadow-[0_10px_24px_rgba(15,23,42,0.04)] sm:p-8">
+            <div className="mt-6 border border-[#cfdbec] bg-[linear-gradient(180deg,#fcfdff_0%,#f5f8fc_100%)] p-4 shadow-[0_10px_24px_rgba(15,23,42,0.04)] sm:p-8">
               <div className="space-y-5 text-base font-bold leading-8 text-slate-900 sm:text-[1.05rem]">
                 <div className="text-center">
-                  <div className="mx-auto inline-flex border border-[#cfdbec] bg-[#eef4fb] px-6 py-3 text-[1.2rem] font-black tracking-[0.08em] text-[#21457e] shadow-[0_8px_18px_rgba(15,23,42,0.05)] sm:text-[1.45rem]">
+                  <div className="mx-auto inline-flex border border-[#cfdbec] bg-[#eef4fb] px-5 py-3 text-[1rem] font-black tracking-[0.08em] text-[#21457e] shadow-[0_8px_18px_rgba(15,23,42,0.05)] sm:text-[1.45rem]">
                     -모집내용-
                   </div>
                   <p>
-                    <span className="bg-[linear-gradient(transparent_58%,#fff29a_58%)] px-2 text-[1.45rem] font-black leading-10 sm:text-[1.95rem] sm:leading-[3.4rem]">
+                    <span className="bg-[linear-gradient(transparent_58%,#fff29a_58%)] px-2 text-[1.1rem] font-black leading-8 sm:text-[1.95rem] sm:leading-[3.4rem]">
                       소상공인의 디지털 전환및 스마트기술 지원을 통한 경쟁력 제고를 위해
                       <br />
                       정부에서 스마트기술 보급을 지원합니다.
                     </span>
                   </p>
                 </div>
-                <p className="text-center text-[1.45rem] font-black tracking-tight text-slate-950 sm:text-[2rem]">
+                <p className="text-center text-[1.15rem] font-black tracking-tight text-slate-950 sm:text-[2rem]">
                   공급가액: 최대 <span className="text-[#e03131]">60%</span> 지원[ <span className="text-[#e03131]">500만원</span>]
                 </p>
                 <div className="grid gap-4 border border-[#ead98b] bg-[linear-gradient(180deg,#fffef2_0%,#fff8cf_100%)] px-4 py-4 sm:px-5 lg:grid-cols-[1fr_auto] lg:items-center">
                   <div>
                     <p className="text-sm font-black tracking-[0.08em] text-[#7a5d00] sm:text-base">마감 전 빠른 신청 권장</p>
-                    <p className="mt-1 text-[1.05rem] font-black leading-8 text-slate-950 sm:text-[1.2rem]">
+                    <p className="mt-1 text-base font-black leading-8 text-slate-950 sm:text-[1.2rem]">
                       모집기간:{' '}
                       <span className="bg-[linear-gradient(transparent_58%,#fff29a_58%)] px-1">
                         2026년 3월 13일(금) 10:00 ~ 4월 1일(수) 17:00까지
@@ -602,13 +604,13 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
                   </div>
                   <div className="border border-[#ead98b] bg-white/70 px-4 py-3 text-left lg:min-w-[17rem]">
                     <p className="text-sm font-black tracking-[0.08em] text-[#7a5d00]">마감까지</p>
-                    <p className="mt-1 text-lg font-black tracking-tight text-slate-950 sm:text-xl">
+                    <p className="mt-1 text-base font-black tracking-tight text-slate-950 sm:text-xl">
                       <span className="text-[#d62828]">{formatRemainingTime(now).days}</span>{' '}
                       <span>{formatRemainingTime(now).rest}</span>
                     </p>
                   </div>
                 </div>
-                <p className="text-center text-[1.3rem] sm:text-[1.65rem]">
+                <p className="text-center text-[1.05rem] leading-8 sm:text-[1.65rem]">
                   신청방법:{' '}
                   <a
                     href="https://www.sbiz.or.kr/smst/index.do"
@@ -653,10 +655,10 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
         </div>
       </section>
 
-      <section className="border border-[#0f4d8b] bg-[linear-gradient(135deg,#0b4d87_0%,#063866_100%)] p-6 text-white shadow-[0_20px_50px_rgba(5,22,45,0.22)] sm:p-8">
+      <section className="border border-[#0f4d8b] bg-[linear-gradient(135deg,#0b4d87_0%,#063866_100%)] p-4 text-white shadow-[0_20px_50px_rgba(5,22,45,0.22)] sm:p-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <p className="text-3xl font-black tracking-tight sm:text-4xl">NEXO 전자칠판 스펙 안내</p>
+            <p className="text-2xl font-black tracking-tight sm:text-4xl">NEXO 전자칠판 스펙 안내</p>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-semibold sm:text-base">
               <p className="text-sky-100">주요사양</p>
               <a
@@ -669,29 +671,29 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
               </a>
             </div>
           </div>
-          <div className="border border-[#5eb8ee] bg-white px-5 py-2 text-2xl font-black tracking-tight text-[#1783cc]">
+          <div className="border border-[#5eb8ee] bg-white px-4 py-2 text-xl font-black tracking-tight text-[#1783cc] sm:px-5 sm:text-2xl">
             65&quot;&nbsp;&nbsp;75&quot;&nbsp;&nbsp;86&quot;
           </div>
         </div>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="border border-[#1897e5] bg-[rgba(4,29,58,0.35)] p-5">
+          <div className="border border-[#1897e5] bg-[rgba(4,29,58,0.35)] p-4 sm:p-5">
             <img src="/assets/requirements-2026/nexo-digital.png" alt="NEXO 전자칠판 이미지" className="block w-full" />
-            <p className="mt-5 text-center text-[2rem] font-black tracking-tight text-white sm:text-[2.8rem]">RAM 16G + ROM 256G</p>
+            <p className="mt-5 text-center text-[1.45rem] font-black tracking-tight text-white sm:text-[2.8rem]">RAM 16G + ROM 256G</p>
             <div className="mx-auto mt-6 max-w-3xl text-center text-sky-50">
-              <p className="text-[1.4rem] font-black leading-[2.1rem] text-[#9fd9ff] sm:text-[1.7rem] sm:leading-[2.5rem]">
+              <p className="text-[1.05rem] font-black leading-[1.6rem] text-[#9fd9ff] sm:text-[1.7rem] sm:leading-[2.5rem]">
                 NEXO
                 <br />
                 ALL-IN-ONE
                 <br />
                 SMART SOLUTION
               </p>
-              <p className="mt-5 text-[1.2rem] font-black leading-9 text-white sm:text-[1.45rem] sm:leading-[2.7rem]">
+              <p className="mt-5 text-[1rem] font-black leading-7 text-white sm:text-[1.45rem] sm:leading-[2.7rem]">
                 PC, 화이트보드, TV 기능이
                 <br />
                 하나로 합쳐진 스마트 교육 시스템
               </p>
-              <p className="mt-4 text-[1.08rem] font-semibold leading-8 text-sky-50 sm:text-[1.3rem] sm:leading-[2.5rem]">
+              <p className="mt-4 text-[0.95rem] font-semibold leading-7 text-sky-50 sm:text-[1.3rem] sm:leading-[2.5rem]">
                 전국 단위의 A/S 망을 구축하여 사후 관리까지 책임지는
                 <br />
                 믿음직한 파트너입니다.
@@ -703,7 +705,7 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
             {specItems.map((item) => (
               <div
                 key={item.id}
-                className={`flex min-h-[92px] items-center justify-center border border-[#1897e5] bg-[rgba(11,98,167,0.22)] px-4 py-4 text-center text-2xl font-semibold tracking-tight text-white ${item.className ?? ''}`}
+                className={`flex min-h-[84px] items-center justify-center border border-[#1897e5] bg-[rgba(11,98,167,0.22)] px-3 py-4 text-center text-lg font-semibold tracking-tight text-white sm:min-h-[92px] sm:px-4 sm:text-2xl ${item.className ?? ''}`}
               >
                 {item.content}
               </div>
@@ -714,11 +716,11 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
 
       <SupportComparisonSection config={config} policyData={policyData} />
 
-      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f6f9fd_100%)] p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
-        <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-4 py-2 text-sm font-black tracking-[0.14em] text-[#21457e] sm:text-base">
+      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f6f9fd_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+        <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
           준비 서류
         </span>
-        <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-950">신청 전 미리 준비할 서류</h2>
+        <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">신청 전 미리 준비할 서류</h2>
 
         <div className="mt-6 grid gap-5 lg:grid-cols-2">
           {documentGroups.map((group) => (
@@ -769,9 +771,9 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
         </div>
       </section>
 
-      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
         <article>
-          <h2 className="text-center text-3xl font-black tracking-tight text-slate-950">소상공인 선정평가 기준</h2>
+          <h2 className="text-center text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">소상공인 선정평가 기준</h2>
 
           <div className="mx-auto mt-5 max-w-[72rem] border border-[#dbe6f3] bg-[linear-gradient(180deg,#f8fbff_0%,#eef4fb_100%)] px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] sm:px-6">
             <p className="text-[1.08rem] font-black leading-8 text-slate-900 sm:text-[1.2rem]">
