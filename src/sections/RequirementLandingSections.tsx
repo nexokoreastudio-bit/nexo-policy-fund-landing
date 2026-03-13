@@ -298,6 +298,27 @@ function ProcessSliderSection() {
           </div>
         </div>
 
+        <a
+          href="https://www.sbiz.or.kr/smst/notice/view.do?key=2111306004395&notcSn=55"
+          target="_blank"
+          rel="noreferrer"
+          className="mb-6 block border border-[#cfdbec] bg-[linear-gradient(180deg,#f8fbff_0%,#eef4fb_100%)] p-4 shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:border-[#7aa7e6] hover:shadow-[0_14px_28px_rgba(15,23,42,0.08)] sm:mb-8 sm:p-5"
+        >
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <span className="inline-flex items-center border border-[#7aa7e6] bg-[#21457e] px-3 py-2 text-xs font-black tracking-[0.12em] text-white sm:text-sm">
+              클릭하여 공고 보기
+            </span>
+            <span className="text-xs font-black tracking-[0.12em] text-[#21457e] sm:text-sm">
+              새 창에서 열기
+            </span>
+          </div>
+          <img
+            src="/assets/requirements-2026/application-no-intervention.png"
+            alt="스마트사업신청 사업공고 및 부당개입금지 안내"
+            className="block w-full"
+          />
+        </a>
+
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
@@ -642,19 +663,6 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
                     스마트상점홈페이지 접수(www.sbiz.or.kr/smst/index.do)
                   </a>
                 </p>
-              </div>
-
-              <div className="mt-8 border border-[#cfdbec] bg-[linear-gradient(180deg,#f8fbff_0%,#eef4fb_100%)] p-4 sm:p-5">
-                <div className="relative">
-                  <img src="/assets/requirements-2026/no-announcement-guide.png" alt="스마트사업신청 사업공고 및 부당개입금지 안내" className="block w-full" />
-                  <a
-                    href="https://www.sbiz.or.kr/smst/bbs/view.do?bbsSn=5727&key=2111306039167&maxList=10&pageIndex=1&sc=&sw=&recordCountPerPage=10"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="부당개입 금지 안내 바로가기"
-                    className="absolute right-[4.5%] top-[4%] block h-[82%] w-[37%]"
-                  />
-                </div>
               </div>
             </div>
           </div>
