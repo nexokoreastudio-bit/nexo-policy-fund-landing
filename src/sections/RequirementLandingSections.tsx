@@ -323,7 +323,7 @@ function ProcessSliderSection() {
             </span>
           </div>
           <img
-            src="/assets/requirements-2026/application-no-intervention.png"
+            src="/assets/requirements-2026/application-step-guide.png"
             alt="스마트사업신청 사업공고 및 부당개입금지 안내"
             className="block w-full"
           />
