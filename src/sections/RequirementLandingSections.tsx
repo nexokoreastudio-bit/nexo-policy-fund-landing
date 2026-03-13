@@ -373,8 +373,36 @@ function ProcessSliderSection() {
 
             <div className="border border-[#d7e3f4] bg-white p-2 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:p-3">
               <img
-                src="/assets/requirements-2026/step3.png"
+                src="/assets/landing/step3_1.png"
                 alt="기술 신청 3단계 예시"
+                className="block w-full"
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#7aa7e6] bg-white text-2xl font-black text-[#21457e] shadow-[0_10px_20px_rgba(15,23,42,0.08)]">
+                ↓
+              </span>
+            </div>
+
+            <div className="border border-[#d7e3f4] bg-white p-2 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:p-3">
+              <img
+                src="/assets/landing/step4.png"
+                alt="기술 신청 4단계 예시"
+                className="block w-full"
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#7aa7e6] bg-white text-2xl font-black text-[#21457e] shadow-[0_10px_20px_rgba(15,23,42,0.08)]">
+                ↓
+              </span>
+            </div>
+
+            <div className="border border-[#d7e3f4] bg-white p-2 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:p-3">
+              <img
+                src="/assets/landing/step5.png"
+                alt="기술 신청 5단계 예시"
                 className="block w-full"
               />
             </div>
