@@ -89,6 +89,7 @@ const PARTNER_NAME_BY_CODE: Record<string, string> = {
   yunhyeon: '윤현',
   iseungyeop: '이승엽',
   ihyeonju: '이현주',
+  jeonggyeongsik: '정경식',
 }
 
 const CONSULT_MANAGER_SHEET_TITLE = '상담관리'
