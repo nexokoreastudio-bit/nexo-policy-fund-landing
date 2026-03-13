@@ -281,21 +281,31 @@ function ProcessSliderSection() {
             모든 서류가 준비 되셨으면 스마트상점 신청을 시작하겠습니다.
           </p>
           <div className="mt-4 flex items-center justify-center gap-3 sm:gap-5">
-            <span className="text-[2rem] font-black leading-none tracking-[-0.18em] text-[#ff3b30] sm:text-[3rem]">
+            <span className="arrow-flash text-[2rem] font-black leading-none tracking-[-0.18em] text-[#ff3b30] sm:text-[3rem]">
               &gt;&gt;&gt;
             </span>
             <a
               href="https://www.sbiz.or.kr/smst/index.do"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center border border-[#21457e] bg-[#21457e] px-5 py-3 text-sm font-black text-white transition hover:bg-[#173a73] sm:text-base"
+              className="zoom-pulse inline-flex items-center justify-center border border-[#21457e] bg-[#21457e] px-5 py-3 text-sm font-black text-white transition hover:bg-[#173a73] sm:text-base"
             >
               소상공인스마트상점 신청 바로가기
             </a>
-            <span className="text-[2rem] font-black leading-none tracking-[-0.18em] text-[#ff3b30] sm:text-[3rem]">
+            <span className="arrow-flash text-[2rem] font-black leading-none tracking-[-0.18em] text-[#ff3b30] sm:text-[3rem]">
               &lt;&lt;&lt;
             </span>
           </div>
+        </div>
+
+        <div className="mb-6 flex justify-center sm:mb-8">
+          <a
+            href="/assets/resources/%5B%E1%84%80%E1%85%AE%E1%84%8B%E1%85%B5%E1%86%B8%C2%B7%E1%84%85%E1%85%A6%E1%86%AB%E1%84%90%E1%85%A1%E1%86%AF%E1%84%92%E1%85%A7%E1%86%BC%5D%2025%E1%84%82%E1%85%A7%E1%86%AB%20%E1%84%89%E1%85%B3%E1%84%86%E1%85%A1%E1%84%90%E1%85%B3%E1%84%89%E1%85%A1%E1%86%BC%E1%84%8C%E1%85%A5%E1%86%B7%20%E1%84%80%E1%85%B5%E1%84%89%E1%85%AE%E1%86%AF%E1%84%87%E1%85%A9%E1%84%80%E1%85%B3%E1%86%B8%E1%84%89%E1%85%A1%E1%84%8B%E1%85%A5%E1%86%B8%20%E1%84%92%E1%85%A9%E1%86%B7%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%20%E1%84%8C%E1%85%A5%E1%86%AF%E1%84%8E%E1%85%A1%20%E1%84%86%E1%85%A2%E1%84%82%E1%85%B2%E1%84%8B%E1%85%A5%E1%86%AF.pdf"
+            download
+            className="border-flash inline-flex items-center justify-center border border-[#21457e] bg-white px-5 py-3 text-sm font-black text-[#21457e] shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition hover:bg-[#eef4fb] sm:text-base"
+          >
+            스마트상점 사업신청 매뉴얼 다운로드 받기
+          </a>
         </div>
 
         <a
@@ -319,14 +329,63 @@ function ProcessSliderSection() {
           />
         </a>
 
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <h2 className="text-center text-[1.65rem] font-black leading-[1.2] tracking-[-0.04em] text-slate-950 sm:text-[2.75rem]">
+            <span className="block">기술신청정보 입력시</span>
+            <span className="block">
+              <span className="text-[#d62828]">일반형</span>
+              <span> 추가 클릭 후 </span>
+              <span className="text-[#d62828]">전자칠판</span>
+              <span> 을 클릭하세요!!</span>
+            </span>
+          </h2>
+        </div>
+
+        <div className="mt-5 border border-[#bfd7f7] bg-[linear-gradient(180deg,#f7fbff_0%,#edf4fb_100%)] p-3 shadow-[0_14px_30px_rgba(15,23,42,0.08)] sm:mt-6 sm:p-5">
+          <div className="space-y-4 sm:space-y-5">
+            <div className="border border-[#d7e3f4] bg-white p-2 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:p-3">
+              <img
+                src="/assets/requirements-2026/step1.png"
+                alt="기술 신청 1단계 예시"
+                className="block w-full"
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#7aa7e6] bg-white text-2xl font-black text-[#21457e] shadow-[0_10px_20px_rgba(15,23,42,0.08)]">
+                ↓
+              </span>
+            </div>
+
+            <div className="border border-[#d7e3f4] bg-white p-2 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:p-3">
+              <img
+                src="/assets/requirements-2026/step2.png"
+                alt="기술 신청 2단계 예시"
+                className="block w-full"
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#7aa7e6] bg-white text-2xl font-black text-[#21457e] shadow-[0_10px_20px_rgba(15,23,42,0.08)]">
+                ↓
+              </span>
+            </div>
+
+            <div className="border border-[#d7e3f4] bg-white p-2 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:p-3">
+              <img
+                src="/assets/requirements-2026/step3.png"
+                alt="기술 신청 3단계 예시"
+                className="block w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
               신청 절차
             </span>
-            <h2 className="mt-4 text-2xl font-black leading-tight tracking-tight text-slate-950 sm:text-4xl">
-              화면을 보면서 단계별로 그대로 따라가면 됩니다.
-            </h2>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
             {visibleTracks.map((track, index) => {
