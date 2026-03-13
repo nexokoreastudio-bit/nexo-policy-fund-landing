@@ -443,8 +443,8 @@ function ProcessSliderSection() {
 
 function ApplicationOverviewSection() {
   return (
-      <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
-        <div className="text-center">
+    <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
+      <div className="text-center">
         <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
           진행 흐름
         </span>
@@ -787,6 +787,8 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
         </div>
       </section>
 
+      <ProcessSliderSection />
+
       <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
         <article>
           <h2 className="text-center text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">소상공인 선정평가 기준</h2>
@@ -849,8 +851,8 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
         </article>
       </section>
 
-      <ProcessSliderSection />
       <ApplicationOverviewSection />
+
       </div>
 
       {referenceOpen ? (
