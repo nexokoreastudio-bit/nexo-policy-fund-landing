@@ -27,6 +27,23 @@ function toInquiryLabel(type: LeadPayload['inquiry_type']) {
   return type === 'policy_waitlist' ? '공지 알림 신청' : '상담 신청'
 }
 
+function resolveCreatedAt(payload: LeadPayload) {
+  const baseDate = payload.created_at ? new Date(payload.created_at) : new Date()
+  const safeDate = Number.isNaN(baseDate.getTime()) ? new Date() : baseDate
+
+  const formatter = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+
+  return formatter.format(safeDate).replace('-', '/').replace('-', '/')
+}
+
 function resolvePartnerCode(payload: LeadPayload) {
   return String(payload.formData.partner_code ?? '').trim()
 }
@@ -115,7 +132,8 @@ function getConsultManagerHeaders() {
 }
 
 function toRow(payload: LeadPayload) {
-  const base = [payload.created_at, toInquiryLabel(payload.inquiry_type)]
+  const createdAt = resolveCreatedAt(payload)
+  const base = [createdAt, toInquiryLabel(payload.inquiry_type)]
   const partnerCode = resolvePartnerCode(payload)
   const partnerName = resolvePartnerName(payload)
   const partner = [
@@ -169,7 +187,7 @@ function toConsultManagerRow(payload: LeadPayload) {
   if (payload.inquiry_type !== 'consult') return null
 
   return [
-    payload.created_at,
+    resolveCreatedAt(payload),
     resolvePartnerName(payload),
     resolvePartnerCode(payload),
     String(payload.formData.businessName ?? ''),
