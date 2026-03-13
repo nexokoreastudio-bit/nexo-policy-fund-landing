@@ -196,14 +196,14 @@ const applicationOverviewSteps: Array<{
     step: '02',
     title: '소상공인 선정',
     summary: '소상공인 사이트 공지',
-    detail: '서면평가와 심사를 거쳐 선정 결과가 공지됩니다.',
+    detail: '서면평가와 심사를 거쳐 선정 결과가 개별 통보 됩니다.',
     note: '선정 발표: 2026년 진행 일정에 따라 공지',
   },
   {
     step: '03',
-    title: '계약 / 자부담 납부 / 보증보험',
+    title: '계약 / 자부담 납부',
     summary: '선정 후 필수 진행 단계',
-    detail: '전자계약, 자부담 납부, 보증보험 발급 서류 제출을 진행합니다.',
+    detail: '전자계약, 자부담 납부 서류 제출을 진행합니다.',
     compare: {
       leftLabel: '자부담완화 대상',
       leftValue: '자부담 40%',
@@ -686,7 +686,7 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
                 href="https://nexokorea.co.kr/product.html"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center border border-[#8fd0ff] bg-white px-4 py-2 text-sm font-black text-[#0b4d87] shadow-[0_10px_24px_rgba(7,35,68,0.18)] transition hover:bg-sky-100"
+                className="inline-flex animate-[pulse_2.4s_ease-in-out_infinite] items-center border border-[#8fd0ff] bg-white px-4 py-2 text-sm font-black text-[#0b4d87] shadow-[0_0_0_1px_rgba(143,208,255,0.45),0_0_18px_rgba(143,208,255,0.28),0_10px_24px_rgba(7,35,68,0.18)] transition hover:bg-sky-100"
               >
                 제품보기 CLICK
               </a>
@@ -702,23 +702,18 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
             <img src="/assets/requirements-2026/nexo-digital.png" alt="NEXO 전자칠판 이미지" className="block w-full" />
             <p className="mt-5 text-center text-[1.45rem] font-black tracking-tight text-white sm:text-[2.8rem]">RAM 16G + ROM 256G</p>
             <div className="mx-auto mt-6 max-w-3xl text-center text-sky-50">
-              <p className="text-[1.05rem] font-black leading-[1.6rem] text-[#9fd9ff] sm:text-[1.7rem] sm:leading-[2.5rem]">
-                NEXO
-                <br />
-                ALL-IN-ONE
-                <br />
-                SMART SOLUTION
-              </p>
-              <p className="mt-5 text-[1rem] font-black leading-7 text-white sm:text-[1.45rem] sm:leading-[2.7rem]">
-                PC, 화이트보드, TV 기능이
-                <br />
-                하나로 합쳐진 스마트 교육 시스템
-              </p>
-              <p className="mt-4 text-[0.95rem] font-semibold leading-7 text-sky-50 sm:text-[1.3rem] sm:leading-[2.5rem]">
-                전국 단위의 A/S 망을 구축하여 사후 관리까지 책임지는
-                <br />
-                믿음직한 파트너입니다.
-              </p>
+              <div className="mx-auto max-w-[34rem] border border-[#49b8ff] bg-[linear-gradient(180deg,rgba(7,52,96,0.88)_0%,rgba(5,37,72,0.72)_100%)] px-4 py-5 shadow-[0_0_0_1px_rgba(73,184,255,0.15),0_18px_36px_rgba(2,16,33,0.28)] sm:px-6 sm:py-6">
+                <p className="text-[1.9rem] font-black leading-none tracking-tight text-[#dff5ff] sm:text-[3.5rem]">
+                  NEXO
+                </p>
+                <p className="mt-3 text-[1.15rem] font-black leading-none tracking-[0.08em] text-[#dff5ff] sm:text-[2rem]">
+                  ALL-IN-ONE
+                </p>
+                <p className="mt-4 text-[1rem] font-black leading-none tracking-[0.12em] text-white sm:text-[1.6rem]">
+                  SMART SOLUTION
+                </p>
+              </div>
+              <p className="mt-4 text-[0.95rem] font-semibold leading-7 text-sky-50 sm:text-[1.3rem] sm:leading-[2.5rem]">사후 관리까지 책임지는 믿음직한 파트너입니다.</p>
             </div>
           </div>
 
@@ -792,9 +787,6 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
         </div>
       </section>
 
-      <ProcessSliderSection />
-      <ApplicationOverviewSection />
-
       <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
         <article>
           <h2 className="text-center text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">소상공인 선정평가 기준</h2>
@@ -856,6 +848,9 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
           </div>
         </article>
       </section>
+
+      <ProcessSliderSection />
+      <ApplicationOverviewSection />
       </div>
 
       {referenceOpen ? (
