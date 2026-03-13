@@ -3,8 +3,8 @@ type FloatingMobileCTAProps = {
   onOpenConsult: () => void
 }
 
-function FloatingMobileCTA({ policyOpen, onOpenConsult }: FloatingMobileCTAProps) {
-  const supportHref = policyOpen ? '/#calculator' : '/#support-summary'
+function FloatingMobileCTA({ policyOpen: _policyOpen, onOpenConsult }: FloatingMobileCTAProps) {
+  const supportHref = '/#support-summary'
 
   return (
     <aside

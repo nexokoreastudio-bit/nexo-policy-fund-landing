@@ -1,10 +1,12 @@
 type StickyTopBarProps = {
   policyOpen: boolean
+  onOpenApplyGuide?: () => void
   onOpenConsult: () => void
 }
 
-function StickyTopBar({ policyOpen, onOpenConsult }: StickyTopBarProps) {
-  const supportHref = policyOpen ? '/#calculator' : '/#support-summary'
+function StickyTopBar({ policyOpen: _policyOpen, onOpenApplyGuide, onOpenConsult }: StickyTopBarProps) {
+  const homeHref = '/#home-top'
+  const supportHref = '/#support-summary'
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
@@ -19,6 +21,18 @@ function StickyTopBar({ policyOpen, onOpenConsult }: StickyTopBarProps) {
           </span>
         </a>
         <nav className="hidden items-center gap-2 sm:flex">
+          <a href={homeHref} className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
+            홈
+          </a>
+          {onOpenApplyGuide ? (
+            <button
+              type="button"
+              onClick={onOpenApplyGuide}
+              className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+            >
+              신청절차보기
+            </button>
+          ) : null}
           <a href={supportHref} className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
             지원금 확인
           </a>

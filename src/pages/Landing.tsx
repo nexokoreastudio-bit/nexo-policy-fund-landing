@@ -24,6 +24,10 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
     document.getElementById('consult-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  const scrollToApplyGuide = () => {
+    document.getElementById('apply-guide-start')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   useEffect(() => {
     mergeAndStoreUtm(window.location.search)
   }, [])
@@ -48,7 +52,7 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
   }
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#08142d_0%,#10254f_18%,#eaf1fb_18%,#f6f9fd_58%,#eef3f9_100%)] text-slate-900">
+    <div id="home-top" className="min-h-screen bg-[linear-gradient(180deg,#08142d_0%,#10254f_18%,#eaf1fb_18%,#f6f9fd_58%,#eef3f9_100%)] text-slate-900">
       {popupOpen ? (
         <div className="fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(3,8,20,0.7)] px-4 py-6">
           <div
@@ -94,7 +98,7 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
         </div>
       ) : null}
 
-      <StickyTopBar policyOpen={config.policy_open} onOpenConsult={scrollToConsultForm} />
+      <StickyTopBar policyOpen={config.policy_open} onOpenApplyGuide={scrollToApplyGuide} onOpenConsult={scrollToConsultForm} />
       {previewBanner ? (
         <div className="bg-slate-100 px-4 py-2 text-center text-xs font-bold text-slate-700 sm:text-sm">{previewBanner}</div>
       ) : null}

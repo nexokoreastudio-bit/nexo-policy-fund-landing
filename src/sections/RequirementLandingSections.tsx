@@ -276,7 +276,10 @@ function ProcessSliderSection() {
   return (
     <>
       <section className="border border-[#d7e3f4] bg-[linear-gradient(180deg,#ffffff_0%,#f4f8fc_100%)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8">
-        <div className="mb-6 border border-[#bfd7f7] bg-[linear-gradient(180deg,#eef6ff_0%,#f8fbff_100%)] px-4 py-4 text-center shadow-[0_12px_24px_rgba(15,23,42,0.05)] sm:mb-8 sm:px-6 sm:py-5">
+        <div
+          id="apply-guide-start"
+          className="mb-6 border border-[#bfd7f7] bg-[linear-gradient(180deg,#eef6ff_0%,#f8fbff_100%)] px-4 py-4 text-center shadow-[0_12px_24px_rgba(15,23,42,0.05)] sm:mb-8 sm:px-6 sm:py-5"
+        >
           <p className="text-[1.2rem] font-black leading-8 text-[#d62828] sm:text-[2rem] sm:leading-[3rem]">
             모든 서류가 준비 되셨으면 스마트상점 신청을 시작하겠습니다.
           </p>
