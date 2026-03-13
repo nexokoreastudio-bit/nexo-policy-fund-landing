@@ -381,7 +381,7 @@ function ProcessSliderSection() {
           </div>
         </div>
 
-        <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="hidden mt-4 flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <span className="inline-flex border border-[#cfdbec] bg-[#eef4fb] px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e] sm:px-4 sm:text-base">
               신청 절차
@@ -406,7 +406,7 @@ function ProcessSliderSection() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-5 lg:grid-cols-[0.88fr_1.12fr]">
+        <div className="hidden mt-6 grid gap-5 lg:grid-cols-[0.88fr_1.12fr]">
           <div className="space-y-3">
             {currentTrack.steps.map((step, index) => {
               const isActive = index === currentStepIndex
