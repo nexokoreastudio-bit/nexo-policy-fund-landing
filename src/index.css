@@ -32,3 +32,28 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+@keyframes ctaFlash {
+  0%,
+  100% {
+    background: #ffffff;
+    color: #0b4d87;
+    box-shadow:
+      0 0 0 1px rgba(143, 208, 255, 0.45),
+      0 0 14px rgba(143, 208, 255, 0.2),
+      0 10px 24px rgba(7, 35, 68, 0.18);
+  }
+
+  50% {
+    background: #fff29a;
+    color: #0b4d87;
+    box-shadow:
+      0 0 0 1px rgba(255, 242, 154, 0.7),
+      0 0 24px rgba(255, 242, 154, 0.65),
+      0 10px 28px rgba(7, 35, 68, 0.22);
+  }
+}
+
+.cta-flash {
+  animation: ctaFlash 1.8s ease-in-out infinite;
+}

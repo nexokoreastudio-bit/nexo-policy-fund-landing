@@ -686,9 +686,9 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
                 href="https://nexokorea.co.kr/product.html"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex animate-[pulse_2.4s_ease-in-out_infinite] items-center border border-[#8fd0ff] bg-white px-4 py-2 text-sm font-black text-[#0b4d87] shadow-[0_0_0_1px_rgba(143,208,255,0.45),0_0_18px_rgba(143,208,255,0.28),0_10px_24px_rgba(7,35,68,0.18)] transition hover:bg-sky-100"
+                className="cta-flash inline-flex items-center border border-[#8fd0ff] bg-white px-4 py-2 text-sm font-black text-[#0b4d87] transition hover:bg-sky-100"
               >
-                제품보기 CLICK
+                제품상세보기 CLICK
               </a>
             </div>
           </div>
