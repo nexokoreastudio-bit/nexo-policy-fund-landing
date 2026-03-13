@@ -40,15 +40,18 @@ export function getStoredUtm(): UtmContext {
 }
 
 export function mergeAndStoreUtm(search: string): UtmContext {
+  const params = new URLSearchParams(search)
   const parsed = parseUtmFromSearch(search)
   const prev = getStoredUtm()
+  const hasPartnerCode = params.has('partner_code') || params.has('partner')
+  const hasPartnerName = params.has('partner_name') || params.has('academy') || params.has('partner_label')
   const next = {
     utm_source: parsed.utm_source ?? prev.utm_source,
     utm_medium: parsed.utm_medium ?? prev.utm_medium,
     utm_campaign: parsed.utm_campaign ?? prev.utm_campaign,
     utm_content: parsed.utm_content ?? prev.utm_content,
-    partner_code: parsed.partner_code ?? prev.partner_code,
-    partner_name: parsed.partner_name ?? prev.partner_name,
+    partner_code: hasPartnerCode ? parsed.partner_code : undefined,
+    partner_name: hasPartnerName ? parsed.partner_name : undefined,
   }
 
   try {

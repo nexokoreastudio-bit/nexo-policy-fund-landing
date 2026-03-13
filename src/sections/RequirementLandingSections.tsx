@@ -712,14 +712,13 @@ function RequirementLandingSections({ config, policyData }: RequirementLandingSe
                   </div>
                 </div>
                 <p className="text-center text-[1.05rem] leading-8 sm:text-[1.65rem]">
-                  신청방법:{' '}
                   <a
                     href="https://www.sbiz.or.kr/smst/index.do"
                     target="_blank"
                     rel="noreferrer"
                     className="font-black text-[#1e63d6] underline underline-offset-4"
                   >
-                    스마트상점홈페이지 접수(www.sbiz.or.kr/smst/index.do)
+                    스마트상점홈페이지(www.sbiz.or.kr/smst/index.do)
                   </a>
                 </p>
               </div>
