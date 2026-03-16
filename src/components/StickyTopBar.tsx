@@ -6,7 +6,7 @@ type StickyTopBarProps = {
 
 function StickyTopBar({ policyOpen: _policyOpen, onOpenApplyGuide, onOpenConsult }: StickyTopBarProps) {
   const homeHref = '/#home-top'
-  const supportHref = '/#support-summary'
+  const supportHref = typeof window === 'undefined' ? '/#support-summary' : `/${window.location.search}#support-summary`
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)]">

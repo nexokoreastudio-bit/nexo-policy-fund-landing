@@ -4,7 +4,7 @@ type FloatingMobileCTAProps = {
 }
 
 function FloatingMobileCTA({ policyOpen: _policyOpen, onOpenConsult }: FloatingMobileCTAProps) {
-  const supportHref = '/#support-summary'
+  const supportHref = typeof window === 'undefined' ? '/#support-summary' : `/${window.location.search}#support-summary`
 
   return (
     <aside
