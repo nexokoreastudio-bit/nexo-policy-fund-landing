@@ -3,52 +3,6 @@ import { submitLead } from '../lib/lead'
 import { mergeAndStoreUtm, type UtmContext } from '../lib/utm'
 import type { LeadRecord } from '../types/policy'
 
-declare global {
-  interface Window {
-    daum?: {
-      Postcode: new (options: {
-        oncomplete: (data: {
-          address: string
-          roadAddress: string
-          jibunAddress: string
-          zonecode: string
-          sido: string
-          sigungu: string
-          bname: string
-          buildingName: string
-          apartment: 'Y' | 'N'
-        }) => void
-      }) => {
-        open: () => void
-      }
-    }
-  }
-}
-
-function loadDaumPostcodeScript() {
-  return new Promise<void>((resolve, reject) => {
-    if (window.daum?.Postcode) {
-      resolve()
-      return
-    }
-
-    const existing = document.querySelector<HTMLScriptElement>('script[data-daum-postcode="true"]')
-    if (existing) {
-      existing.addEventListener('load', () => resolve(), { once: true })
-      existing.addEventListener('error', () => reject(new Error('postcode script load failed')), { once: true })
-      return
-    }
-
-    const script = document.createElement('script')
-    script.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
-    script.async = true
-    script.dataset.daumPostcode = 'true'
-    script.onload = () => resolve()
-    script.onerror = () => reject(new Error('postcode script load failed'))
-    document.body.appendChild(script)
-  })
-}
-
 function formatPhoneNumber(value: string) {
   const digits = value.replace(/\D/g, '').slice(0, 11)
 
@@ -64,13 +18,8 @@ function ConsultRequestSection() {
   const [businessName, setBusinessName] = useState('')
   const [ownerName, setOwnerName] = useState('')
   const [ownerPhone, setOwnerPhone] = useState('')
-  const [managerName, setManagerName] = useState('')
-  const [managerPhone, setManagerPhone] = useState('')
-  const [sameAsOwner, setSameAsOwner] = useState(false)
   const [address, setAddress] = useState('')
-  const [addressDetail, setAddressDetail] = useState('')
   const [consultTime, setConsultTime] = useState('11시~13시')
-  const [supportType, setSupportType] = useState<'normal' | 'vulnerable'>('normal')
   const [message, setMessage] = useState('')
   const [agree, setAgree] = useState(false)
   const [utm, setUtm] = useState<UtmContext>({})
@@ -78,28 +27,6 @@ function ConsultRequestSection() {
   useEffect(() => {
     setUtm(mergeAndStoreUtm(window.location.search))
   }, [])
-
-  useEffect(() => {
-    if (!sameAsOwner) return
-    setManagerName(ownerName)
-    setManagerPhone(ownerPhone)
-  }, [sameAsOwner, ownerName, ownerPhone])
-
-  const openAddressSearch = async () => {
-    setError('')
-
-    try {
-      await loadDaumPostcodeScript()
-      new window.daum!.Postcode({
-        oncomplete: (data) => {
-          const mainAddress = data.roadAddress || data.address || data.jibunAddress
-          setAddress(mainAddress)
-        },
-      }).open()
-    } catch {
-      setError('주소 검색을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.')
-    }
-  }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -114,13 +41,13 @@ function ConsultRequestSection() {
         name: ownerName,
         phone: ownerPhone,
         businessName,
-        manager_name: managerName,
-        manager_phone: managerPhone,
+        manager_name: ownerName,
+        manager_phone: ownerPhone,
         address,
-        address_detail: addressDetail,
+        address_detail: '',
         region: address,
         consult_time: consultTime,
-        support_type: supportType === 'normal' ? '일반지원대상(50%)' : '자부담완화 대상(60%)',
+        support_type: '일반지원대상(50%)',
         message,
         agree,
         entry_url: window.location.href,
@@ -135,13 +62,8 @@ function ConsultRequestSection() {
       setBusinessName('')
       setOwnerName('')
       setOwnerPhone('')
-      setManagerName('')
-      setManagerPhone('')
-      setSameAsOwner(false)
       setAddress('')
-      setAddressDetail('')
       setConsultTime('11시~13시')
-      setSupportType('normal')
       setMessage('')
       setAgree(false)
     } catch {
@@ -162,7 +84,7 @@ function ConsultRequestSection() {
         </span>
         <h2 className="mt-4 text-2xl font-black leading-tight tracking-tight text-slate-950 sm:text-4xl">신청 전 궁금한 점이 있으면 상담 신청을 남겨주세요</h2>
         <p className="mt-3 text-sm font-semibold leading-7 text-slate-600 sm:text-lg">
-          준비서류, 신청 자격, 설치 일정, 자부담 관련 문의를 순차적으로 안내해드립니다.
+          대표자 정보와 상담 내용을 남겨주시면 순차적으로 확인 후 안내해드립니다.
         </p>
       </div>
 
@@ -207,99 +129,51 @@ function ConsultRequestSection() {
             </label>
           </div>
 
-          <div className="space-y-4 border border-[#dbe6f3] bg-white p-4 sm:space-y-5 sm:p-5">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-lg font-black text-slate-950">담당자 정보</p>
-              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-                <input
-                  type="checkbox"
-                  checked={sameAsOwner}
-                  onChange={(event) => {
-                    const checked = event.target.checked
-                    setSameAsOwner(checked)
-                    if (checked) {
-                      setManagerName(ownerName)
-                      setManagerPhone(ownerPhone)
-                    }
-                  }}
-                />
-                대표자와 동일
-              </label>
+          <div className="flex border border-[#dbe6f3] bg-[linear-gradient(180deg,#f8fbff_0%,#eef4fb_100%)] p-4 sm:p-5">
+            <div className="my-auto">
+              <span className="inline-flex border border-[#cfdbec] bg-white px-3 py-2 text-xs font-black tracking-[0.14em] text-[#21457e]">
+                접수 안내
+              </span>
+              <h3 className="mt-4 text-xl font-black leading-tight tracking-tight text-slate-950 sm:text-2xl">
+                이런 내용을 주로 안내합니다
+              </h3>
+              <p className="mt-3 text-sm font-semibold leading-7 text-slate-600 sm:text-base">
+                준비서류, 신청 자격, 설치 일정, 자부담 관련 문의를 순차적으로 안내해드립니다.
+              </p>
+              <ul className="mt-4 space-y-2 text-sm font-semibold text-slate-700">
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[#21457e]" />
+                  <span>신청 자격 및 지원 유형 확인</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[#21457e]" />
+                  <span>준비서류 및 접수 순서 안내</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[#21457e]" />
+                  <span>설치 일정 및 진행 절차 상담</span>
+                </li>
+              </ul>
+              <p className="mt-4 text-xs font-bold text-slate-500">
+                접수 후 순차적으로 확인하며, 운영 시간 내 연락을 드립니다.
+              </p>
             </div>
-
-            <label className="grid gap-2">
-              <span className="text-sm font-black text-[#21457e]">담당자 성명 (필수)</span>
-              <input
-                required
-                value={managerName}
-                onChange={(event) => setManagerName(event.target.value)}
-                className="border border-[#cfd8e6] bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-[#21457e] disabled:bg-slate-50"
-                placeholder="담당자 성명을 입력해 주세요"
-                disabled={sameAsOwner}
-              />
-            </label>
-
-            <label className="grid gap-2">
-              <span className="text-sm font-black text-[#21457e]">담당자 연락처 (필수)</span>
-              <input
-                required
-                value={managerPhone}
-                onChange={(event) => setManagerPhone(formatPhoneNumber(event.target.value))}
-                className="border border-[#cfd8e6] bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-[#21457e] disabled:bg-slate-50"
-                placeholder="010-0000-0000"
-                disabled={sameAsOwner}
-              />
-            </label>
           </div>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2">
-          <label className="grid gap-2">
-            <span className="text-sm font-black text-[#21457e]">지원 유형 (필수)</span>
-            <select
-              value={supportType}
-              onChange={(event) => setSupportType(event.target.value as 'normal' | 'vulnerable')}
-              className="border border-[#cfd8e6] bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-[#21457e]"
-            >
-              <option value="normal">일반지원대상(50%)</option>
-              <option value="vulnerable">자부담완화 대상(60%)</option>
-            </select>
-          </label>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
+        <div className="grid gap-4">
           <label className="grid gap-2">
             <span className="text-sm font-black text-[#21457e]">주소 (선택)</span>
             <input
               value={address}
-              readOnly
-              className="border border-[#cfd8e6] bg-[#f8fbff] px-4 py-3 text-base font-semibold text-slate-900 outline-none"
-              placeholder="주소 검색 버튼으로 주소를 입력해 주세요"
+              onChange={(event) => setAddress(event.target.value)}
+              className="border border-[#cfd8e6] bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-[#21457e]"
+              placeholder="주소를 직접 입력해 주세요"
             />
           </label>
-          <div className="grid gap-2">
-            <span className="hidden text-sm font-black text-transparent md:block">주소 검색</span>
-            <button
-              type="button"
-              onClick={openAddressSearch}
-              className="w-full border border-[#21457e] bg-[#21457e] px-5 py-3 text-base font-black text-white transition hover:bg-[#183766] md:w-auto"
-            >
-              주소 검색
-            </button>
-          </div>
         </div>
 
         <div className="grid gap-4 md:grid-cols-[1fr_18rem] md:gap-5">
-          <label className="grid gap-2">
-            <span className="text-sm font-black text-[#21457e]">상세 주소 (선택)</span>
-            <input
-              value={addressDetail}
-              onChange={(event) => setAddressDetail(event.target.value)}
-              className="border border-[#cfd8e6] bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-[#21457e]"
-              placeholder="상세 주소를 입력해 주세요"
-            />
-          </label>
-
           <label className="grid gap-2">
             <span className="text-sm font-black text-[#21457e]">상담가능 시간 (필수)</span>
             <select
