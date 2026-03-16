@@ -88,7 +88,7 @@ const PARTNER_NAME_BY_CODE: Record<string, string> = {
   yeomchangjun: '염창준',
   yunhyeon: '윤현',
   iseungyeop: '이승엽',
-  ihyeonju: '이현주',
+  ihyeonju: '김동명',
   jeonggyeongsik: '정경식',
   susimdal: '수심달',
 }
