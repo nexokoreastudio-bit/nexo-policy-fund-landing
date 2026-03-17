@@ -91,6 +91,7 @@ const PARTNER_NAME_BY_CODE: Record<string, string> = {
   ihyeonju: '김동명',
   jeonggyeongsik: '정경식',
   susimdal: '수심달',
+  ipsinavigation: '입시네비게이션',
 }
 
 const CONSULT_MAIN_SHEET_TITLE = '상담신청'
