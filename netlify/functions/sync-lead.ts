@@ -93,6 +93,7 @@ const PARTNER_NAME_BY_CODE: Record<string, string> = {
   susimdal: '수심달',
 }
 
+const CONSULT_MAIN_SHEET_TITLE = '상담신청'
 const CONSULT_MANAGER_SHEET_TITLE = '상담관리'
 const DIRECT_INBOUND_PARTNER_NAME = '직접유입'
 
@@ -543,12 +544,28 @@ async function appendToSheet(payload: LeadPayload) {
     throw new Error('spreadsheet id is missing')
   }
 
-  await appendRows({
-    sheets,
-    spreadsheetId,
-    range,
-    values: row,
-  })
+  if (payload.inquiry_type === 'consult') {
+    await ensureSheetExists({
+      sheets,
+      spreadsheetId,
+      title: CONSULT_MAIN_SHEET_TITLE,
+      headers: getHeaders(payload.inquiry_type),
+    })
+
+    await appendRows({
+      sheets,
+      spreadsheetId,
+      range: toSheetRange(CONSULT_MAIN_SHEET_TITLE),
+      values: row,
+    })
+  } else {
+    await appendRows({
+      sheets,
+      spreadsheetId,
+      range,
+      values: row,
+    })
+  }
 
   if (payload.inquiry_type !== 'consult') return
 
