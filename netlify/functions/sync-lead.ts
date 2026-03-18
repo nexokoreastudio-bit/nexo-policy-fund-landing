@@ -200,6 +200,7 @@ function getConsultManagerHeaders() {
     '지역',
     '지원 유형',
     '추가 문의 내용',
+    '상담 가능 시간',
     '상담 담당자',
     '상담 상태',
     '상담 시작',
@@ -277,6 +278,7 @@ function toConsultManagerRow(payload: LeadPayload) {
     String(payload.formData.region ?? ''),
     String(payload.formData.support_type ?? ''),
     String(payload.formData.message ?? ''),
+    String(payload.formData.consult_time ?? ''),
     '',
     '미진행',
     false,
@@ -351,6 +353,36 @@ async function ensureSheetExists(params: {
   }
 }
 
+async function syncSheetHeaders(params: {
+  sheets: ReturnType<typeof google.sheets>
+  spreadsheetId: string
+  title: string
+  headers: string[]
+}) {
+  const { sheets, spreadsheetId, title, headers } = params
+  const headerRange = toSheetRange(title, '1:1')
+  const headerResponse = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: headerRange,
+  })
+
+  const currentHeaders = headerResponse.data.values?.[0] ?? []
+  const needsUpdate =
+    currentHeaders.length !== headers.length ||
+    headers.some((header, index) => String(currentHeaders[index] ?? '') !== header)
+
+  if (!needsUpdate) return
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId,
+    range: headerRange,
+    valueInputOption: 'USER_ENTERED',
+    requestBody: {
+      values: [headers],
+    },
+  })
+}
+
 async function appendRows(params: {
   sheets: ReturnType<typeof google.sheets>
   spreadsheetId: string
@@ -405,8 +437,8 @@ async function setupConsultManagerRow(params: {
               sheetId,
               startRowIndex: rowIndex,
               endRowIndex: rowIndex + 1,
-              startColumnIndex: 11,
-              endColumnIndex: 12,
+              startColumnIndex: 12,
+              endColumnIndex: 13,
             },
             rule: {
               condition: {
@@ -424,8 +456,8 @@ async function setupConsultManagerRow(params: {
               sheetId,
               startRowIndex: rowIndex,
               endRowIndex: rowIndex + 1,
-              startColumnIndex: 12,
-              endColumnIndex: 13,
+              startColumnIndex: 13,
+              endColumnIndex: 14,
             },
             rule: {
               condition: {
@@ -443,8 +475,8 @@ async function setupConsultManagerRow(params: {
               sheetId,
               startRowIndex: rowIndex,
               endRowIndex: rowIndex + 1,
-              startColumnIndex: 15,
-              endColumnIndex: 16,
+              startColumnIndex: 16,
+              endColumnIndex: 17,
             },
             rule: {
               condition: {
@@ -456,22 +488,6 @@ async function setupConsultManagerRow(params: {
                   { userEnteredValue: '해당없음' },
                 ],
               },
-              strict: true,
-              showCustomUi: true,
-            },
-          },
-        },
-        {
-          setDataValidation: {
-            range: {
-              sheetId,
-              startRowIndex: rowIndex,
-              endRowIndex: rowIndex + 1,
-              startColumnIndex: 13,
-              endColumnIndex: 14,
-            },
-            rule: {
-              condition: { type: 'BOOLEAN' },
               strict: true,
               showCustomUi: true,
             },
@@ -499,8 +515,24 @@ async function setupConsultManagerRow(params: {
               sheetId,
               startRowIndex: rowIndex,
               endRowIndex: rowIndex + 1,
-              startColumnIndex: 16,
-              endColumnIndex: 17,
+              startColumnIndex: 15,
+              endColumnIndex: 16,
+            },
+            rule: {
+              condition: { type: 'BOOLEAN' },
+              strict: true,
+              showCustomUi: true,
+            },
+          },
+        },
+        {
+          setDataValidation: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 17,
+              endColumnIndex: 18,
             },
             rule: {
               condition: { type: 'BOOLEAN' },
@@ -571,6 +603,12 @@ async function appendToSheet(payload: LeadPayload) {
   if (payload.inquiry_type !== 'consult') return
 
   await ensureSheetExists({
+    sheets,
+    spreadsheetId,
+    title: CONSULT_MANAGER_SHEET_TITLE,
+    headers: getConsultManagerHeaders(),
+  })
+  await syncSheetHeaders({
     sheets,
     spreadsheetId,
     title: CONSULT_MANAGER_SHEET_TITLE,
