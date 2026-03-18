@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 
 type AccordionItem = {
   title: string
-  content: string
+  content: ReactNode
 }
 
 type AccordionProps = {
@@ -35,7 +35,7 @@ function Accordion({ items, onOpenItem }: AccordionProps) {
               <span className="text-sm font-semibold text-slate-900 sm:text-base">{item.title}</span>
               <span className="text-xl text-slate-500">{isOpen ? '-' : '+'}</span>
             </button>
-            {isOpen ? <p className="border-t border-slate-100 px-5 py-4 text-sm leading-6 text-slate-600">{item.content}</p> : null}
+            {isOpen ? <div className="border-t border-slate-100 px-5 py-4 text-sm leading-6 text-slate-600">{item.content}</div> : null}
           </div>
         )
       })}

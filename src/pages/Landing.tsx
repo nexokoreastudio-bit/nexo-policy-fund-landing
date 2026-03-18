@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Hero from '../sections/Hero'
 import RequirementLandingSections from '../sections/RequirementLandingSections'
 import ConsultRequestSection from '../sections/ConsultRequestSection'
+import ConsultQnASection from '../sections/ConsultQnASection'
 import StickyTopBar from '../components/StickyTopBar'
 import FloatingMobileCTA from '../components/FloatingMobileCTA'
 import { getClientConfig } from '../lib/config'
@@ -26,6 +27,10 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
 
   const scrollToApplyGuide = () => {
     document.getElementById('apply-guide-start')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const scrollToQnA = () => {
+    document.getElementById('consult-qna')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   useEffect(() => {
@@ -98,7 +103,12 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
         </div>
       ) : null}
 
-      <StickyTopBar policyOpen={config.policy_open} onOpenApplyGuide={scrollToApplyGuide} onOpenConsult={scrollToConsultForm} />
+      <StickyTopBar
+        policyOpen={config.policy_open}
+        onOpenApplyGuide={scrollToApplyGuide}
+        onOpenQnA={scrollToQnA}
+        onOpenConsult={scrollToConsultForm}
+      />
       {previewBanner ? (
         <div className="bg-slate-100 px-4 py-2 text-center text-xs font-bold text-slate-700 sm:text-sm">{previewBanner}</div>
       ) : null}
@@ -108,6 +118,7 @@ function Landing({ overrideConfig, overridePolicyData, previewBanner }: LandingP
         <div className="mt-8">
           <ConsultRequestSection />
         </div>
+        <ConsultQnASection />
       </main>
       <FloatingMobileCTA policyOpen={config.policy_open} onOpenConsult={scrollToConsultForm} />
     </div>
