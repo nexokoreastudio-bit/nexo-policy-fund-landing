@@ -127,10 +127,10 @@ function ConsultQnASection() {
           QnA
         </span>
         <h2 className="mt-4 text-2xl font-black leading-tight tracking-tight text-slate-950 sm:text-4xl">
-          전자칠판 일반형 신청 전에 많이 확인하는 질문만 먼저 정리했습니다
+          지원사업 신청 전 핵심만 확인하세요
         </h2>
         <p className="mt-3 text-sm font-semibold leading-7 text-slate-600 sm:text-lg">
-          전자칠판 일반형 기준으로 지원 자격, 신청 방법, 자부담, 의무사용기간처럼 상담 전에 자주 나오는 질문만 먼저 확인해보세요.
+          신청 자격, 지원금, 자부담금, 의무사용기간처럼 꼭 확인해야 하는 내용을 먼저 읽어보시면 신청 흐름을 훨씬 쉽게 이해하실 수 있습니다.
         </p>
       </div>
 
